@@ -18,3 +18,7 @@ highlighter: rouge # For code syntax highlighting
 sass:
   sass_dir: _sass
   style: compressed
+
+# Includes and excludes -- some things you don't want to publish to the final site, like configs or readme files.
+include: [".htaccess"]
+exclude: ["lib", "config.rb", "Capfile", "config", "log", "Rakefile", "Rakefile.rb", "tmp", "less", "*.sublime-project", "*.sublime-workspace", "test", "spec", "Gruntfile.js", "package.json", "node_modules", "Gemfile", "Gemfile.lock", "LICENSE", "README.md"]
