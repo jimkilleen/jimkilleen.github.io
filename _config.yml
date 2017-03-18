@@ -12,3 +12,5 @@ repository: JimKilleen/JimKilleen.github.io
 gems:
   - jekyll-sitemap # Generates a sitemap.xml
   - jekyll-redirect-from # Allows you to redirect from other pages (will be useful in the future)
+
+highlighter: rouge # For code syntax highlighting
