@@ -4,3 +4,6 @@ title:            "JimKilleen.com"
 locale:           en_US
 url:              http://JimKilleen.com
 baseurl:          ""
+
+# Github Metadata integration
+repository: JimKilleen/JimKilleen.github.io
