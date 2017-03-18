@@ -1,7 +1,7 @@
 # JimKilleen.com
 Jim's site reboot.
 
-## Getting Started
+## Getting Started With Jekyll on Windows
 This guide is meant for building the site on a Windows machine using Ruby and Jekyll.
 
 ### Installations
