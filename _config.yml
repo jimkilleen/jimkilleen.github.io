@@ -7,3 +7,8 @@ baseurl:          ""
 
 # Github Metadata integration
 repository: JimKilleen/JimKilleen.github.io
+
+# Additional Gems
+gems:
+  - jekyll-sitemap # Generates a sitemap.xml
+  - jekyll-redirect-from # Allows you to redirect from other pages (will be useful in the future)
