@@ -1,4 +1,5 @@
 ---
+layout: default
 ---
 
 # A file to Test Your Jekyll Setup!
