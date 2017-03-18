@@ -14,3 +14,7 @@ gems:
   - jekyll-redirect-from # Allows you to redirect from other pages (will be useful in the future)
 
 highlighter: rouge # For code syntax highlighting
+
+sass:
+  sass_dir: _sass
+  style: compressed
