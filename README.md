@@ -2,7 +2,7 @@
 Jim's site reboot.
 
 ## Getting Started
-This guide is meant for building the site on a windows machine using Ruby and Jekyll.
+This guide is meant for building the site on a Windows machine using Ruby and Jekyll.
 
 ### Installations
 
