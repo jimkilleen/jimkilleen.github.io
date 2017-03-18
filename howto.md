@@ -24,7 +24,7 @@ This file will be converted by jekyll to an html page that will be available at 
 1. Numbered item
 
 ## Syntax Highlighting
-You can write text and it'll make it a code block and highlight it for you.
+You can write text and it'll make it a code block and highlight it for you (once you add stylesheets that can see it, that is. Lots out there.)
 
 ### CSharp
 ```csharp
