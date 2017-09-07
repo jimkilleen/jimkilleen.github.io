@@ -2976,6 +2976,14 @@ td.cms_table_outer_border_td {
 /*************************************************/
 /* BREADCRUMB */
 
+.bop5share {
+	display:none;
+}
+
+#breadcrumb{
+	display:none;
+}
+
 .breadcrumb > ul {
 	background:transparent url(images/misc/navbit-home.png) left top no-repeat;
 	border:none;
