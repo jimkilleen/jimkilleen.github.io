@@ -2174,6 +2174,7 @@ img.inlineimg {
 	margin-bottom:6px;
 }
 .navlinks {
+	display:none;
 	background: #f5f5f5 none   ;
 	border-top: 1px solid #e7e7e7;
 	padding: 10px 0;
@@ -2338,6 +2339,10 @@ td.cms_table_outer_border_td {
         height: auto !important;
         height: 2em;
         padding: 0 0 0 0;
+}
+
+#toplinks {
+	display: none;
 }
 
 .toplinks {
@@ -3077,7 +3082,12 @@ td.cms_table_outer_border_td {
 
 /*************************************************/
 /* NEW CONTENT LINK */
+#showthread_navpopup {
+	display:none;
+}
+
 .newcontent_textcontrol {
+	display: none;
 	background: #000000 url(images/buttons/newbtn_middle.png) repeat-x left top;
 	_background-image: none;
 	-moz-border-radius: 10px;
@@ -3095,6 +3105,7 @@ td.cms_table_outer_border_td {
 	clear: right;
 }
 .newcontent_textcontrol span {
+	display: none;
 	font-size:15px;
 	font-weight:bold;
 	display:inline;
