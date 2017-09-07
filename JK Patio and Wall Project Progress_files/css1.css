@@ -270,10 +270,12 @@ form#quick_reply textarea {
 }
 
 .below_postlist .newcontent_textcontrol {
+	display: none;
 	position: absolute;
 	top: -2.5em;
 }
 .noinlinemod.below_postlist .newcontent_textcontrol {
+	display: none;
 	top: 0em;
 }
  
@@ -1500,6 +1502,9 @@ img.onlinestatus {
 	margin-top: 15.99px;
 }
 
+#thread_info{
+	display:none;
+}
 .forum_info .options_block_container, .thread_info .options_block_container {
 	width: 100%;
 	float: left;
