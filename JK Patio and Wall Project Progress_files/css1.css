@@ -137,6 +137,10 @@
 
 /* CSS Document */
 
+#postlist_popups {
+	display:none;
+}
+
 .postlist, #postlist {
 	clear:both;
 	margin-top:5px;
@@ -189,6 +193,7 @@ form#quick_reply textarea {
 }
 
 .above_postlist .newcontent_textcontrol {
+	display:none;
 	margin-top: 5px;
 	position: relative;
 	_display:inline;
