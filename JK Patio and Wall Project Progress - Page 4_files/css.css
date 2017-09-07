@@ -2624,6 +2624,7 @@ td.cms_table_outer_border_td {
 /* NAVBAR */
 
 .navbar {
+	display:none;
 	position:relative;
 	height:53px;
 	background:#0D0D16 none   ;
