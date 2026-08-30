@@ -1,29 +1,89 @@
-<html>
-
-<head>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" />
-  <style>
-  .center {
-    text-align: center;
-  }
- </style>
-<title>JimKilleen.com</title>
-</head>
-
-<body >
-  <div>
-    <div class="row" style="background-color: black;">
-      <div class="twelve columns center" >
-        <img src="http://jimkilleen.com/Images/LogoBlackBG.jpg" >
-      </div>
-    </div>
-     <div class="row">
-      <div class="twelve columns center" style="margin-top: 3rem;">
-        <p><span>Just Testing... Again. </span></p>
-        <!-- <a href="./JK Patio and Wall Project Progress.html">Link to pages</a> -->
-      </div>
-    </div>
-  </div>
-</body>
-
-</html>
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Jim Killeen — Photography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F4F2EC;--panel:#EFEBE2;--ink:#1B1A16;--muted:#7A756A;--hair:#E0DBD0;--select:#E4123A;--shadow:0 1px 2px rgba(27,26,22,.06),0 8px 24px rgba(27,26,22,.10);}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:"Archivo",system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.45}
+.mono{font-family:"Space Mono",ui-monospace,monospace}
+.logobar{background:#000;width:100%;padding:26px 18px;display:flex;justify-content:center}
+.logobar img{width:100%;max-width:660px;height:auto;display:block}
+.wrap{max-width:1240px;margin:0 auto;padding:0 22px}
+.intro{max-width:56ch;margin:22px auto 0;color:#514d45;font-size:14.5px;text-align:center}
+.rule{height:1px;background:var(--hair);margin:20px 0 0}
+.filters{display:flex;flex-wrap:wrap;gap:6px 2px;padding:16px 0 4px;align-items:center;justify-content:center}
+.filter{appearance:none;background:none;border:0;cursor:pointer;font-family:"Space Mono",monospace;font-size:12.5px;letter-spacing:.04em;color:var(--muted);padding:6px 11px;border-radius:999px;text-transform:uppercase;position:relative;transition:color .18s}
+.filter:hover{color:var(--ink)}.filter[aria-pressed="true"]{color:var(--ink)}
+.filter[aria-pressed="true"]::after{content:"";position:absolute;left:10px;right:10px;bottom:1px;height:2px;background:var(--select);border-radius:2px}
+.count{width:100%;text-align:center;margin-top:8px;font-family:"Space Mono",monospace;font-size:11.5px;color:var(--muted);letter-spacing:.05em}
+.grid{columns:4 250px;column-gap:16px;padding:18px 0 40px}
+figure.card{break-inside:avoid;margin:0 0 16px;position:relative;cursor:pointer;background:var(--panel);border-radius:3px;overflow:hidden;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s}
+figure.card:hover{transform:translateY(-3px);box-shadow:0 2px 4px rgba(27,26,22,.08),0 16px 34px rgba(27,26,22,.16)}
+figure.card img{display:block;width:100%;height:auto;background:var(--hair)}
+figcaption{position:absolute;left:0;right:0;bottom:0;padding:26px 12px 11px;background:linear-gradient(to top,rgba(20,19,15,.82),rgba(20,19,15,0));color:#F4F2EC;opacity:0;transition:opacity .2s}
+figure.card:hover figcaption{opacity:1}
+.cap-title{font-size:13.5px;font-weight:600}.cap-cat{font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:.06em;color:#d9d4c8}
+.lb{position:fixed;inset:0;background:rgba(16,15,12,.95);display:none;z-index:50;flex-direction:column;align-items:center;justify-content:center;padding:24px}
+.lb.open{display:flex}
+.lb-stage{max-width:min(1200px,94vw);max-height:76vh;display:flex;align-items:center;justify-content:center}
+.lb-stage img{max-width:100%;max-height:76vh;width:auto;height:auto;box-shadow:0 20px 60px rgba(0,0,0,.5);border-radius:2px;background:#222}
+.lb-label{color:#EDEAE1;max-width:min(1200px,94vw);width:100%;margin-top:18px;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.lb-title{font-size:18px;font-weight:600}.lb-meta{font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.06em;color:#a9a397;margin-top:3px}.lb-meta .sel{color:var(--select)}
+.lb-nav{display:flex;gap:8px}
+.lb-btn{appearance:none;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.05);color:#EDEAE1;width:42px;height:42px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.lb-btn:hover{background:rgba(255,255,255,.14)}.lb-close{position:absolute;top:18px;right:20px}
+footer{border-top:1px solid var(--hair);padding:22px 0 44px;color:var(--muted);font-family:"Space Mono",monospace;font-size:11.5px;letter-spacing:.06em;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+@media (max-width:560px){.grid{columns:2 150px;column-gap:12px}figure.card{margin-bottom:12px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head>
+<body>
+<div class="logobar"><img src="assets/LogoBlackBG.jpg" alt="Jim Killeen Photography — Art · Design · Retouching"></div>
+<div class="wrap">
+  <p class="intro">Selected images &mdash; landscapes from Acadia and the Maine coast, Hawaii, and Singapore, alongside architecture, nature studies, and still life.</p>
+  <div class="rule"></div>
+  <div class="filters" id="filters"></div>
+  <main class="grid" id="grid" aria-label="Photo gallery"></main>
+</div>
+<footer class="wrap"><span>&copy; Jim Killeen &mdash; All rights reserved</span><span id="fcount"></span></footer>
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <button class="lb-btn lb-close" id="lbClose" aria-label="Close">&times;</button>
+  <div class="lb-stage"><img id="lbImg" alt=""></div>
+  <div class="lb-label"><div><div class="lb-title" id="lbTitle"></div><div class="lb-meta" id="lbMeta"></div></div>
+  <div class="lb-nav"><button class="lb-btn" id="lbPrev" aria-label="Previous">&lsaquo;</button><button class="lb-btn" id="lbNext" aria-label="Next">&rsaquo;</button></div></div>
+</div>
+<script>
+let PHOTOS=[], CATS_ORDER=[], active='All', current=0, view=[];
+const grid=document.getElementById('grid'), filters=document.getElementById('filters'), fcount=document.getElementById('fcount');
+function boot(){
+  const cats=['All']; CATS_ORDER.forEach(c=>{if(PHOTOS.some(p=>p.cat===c))cats.push(c);});
+  PHOTOS.forEach(p=>{if(!cats.includes(p.cat))cats.push(p.cat);});
+  filters.innerHTML='';
+  cats.forEach(c=>{const b=document.createElement('button');b.className='filter';b.textContent=c;b.setAttribute('aria-pressed',c===active);b.onclick=()=>{active=c;render();};filters.appendChild(b);});
+  const cnt=document.createElement('span');cnt.className='count';cnt.id='cnt';filters.appendChild(cnt);
+  render();
+}
+function render(){
+  [...filters.querySelectorAll('.filter')].forEach(b=>b.setAttribute('aria-pressed',b.textContent===active));
+  view=active==='All'?PHOTOS.slice():PHOTOS.filter(p=>p.cat===active);
+  grid.innerHTML='';
+  view.forEach((p,idx)=>{const fig=document.createElement('figure');fig.className='card';
+    fig.innerHTML=`<img loading="lazy" src="${p.thumb}" alt="${p.title}"><figcaption><div class="cap-title">${p.title}</div><div class="cap-cat">${p.cat}</div></figcaption>`;
+    fig.onclick=()=>openLb(idx);grid.appendChild(fig);});
+  const n=view.length;const c=document.getElementById('cnt');if(c)c.textContent=n+' image'+(n===1?'':'s');fcount.textContent=n+' / '+PHOTOS.length+' images';
+}
+const lb=document.getElementById('lb'),lbImg=document.getElementById('lbImg'),lbTitle=document.getElementById('lbTitle'),lbMeta=document.getElementById('lbMeta');
+function openLb(i){current=i;const p=view[i];lbImg.src=p.full;lbImg.alt=p.title;lbTitle.textContent=p.title;lbMeta.innerHTML=`<span class="sel">${String(i+1).padStart(2,'0')}</span> / ${String(view.length).padStart(2,'0')} &middot; ${p.cat}`;lb.classList.add('open');document.body.style.overflow='hidden';}
+function closeLb(){lb.classList.remove('open');document.body.style.overflow='';}
+function step(d){openLb((current+d+view.length)%view.length);}
+document.getElementById('lbClose').onclick=closeLb;document.getElementById('lbPrev').onclick=()=>step(-1);document.getElementById('lbNext').onclick=()=>step(1);
+lb.onclick=e=>{if(e.target===lb)closeLb();};
+document.addEventListener('keydown',e=>{if(!lb.classList.contains('open'))return;if(e.key==='Escape')closeLb();if(e.key==='ArrowLeft')step(-1);if(e.key==='ArrowRight')step(1);});
+fetch('photos.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{
+  CATS_ORDER=d.cats||[];
+  PHOTOS=(d.items||[]).map(i=>({thumb:'thumbs/'+i.file,full:'images/'+i.file,title:i.title,cat:i.cat}));
+  boot();
+}).catch(e=>{grid.innerHTML='<p style=\"padding:20px\">Could not load photos.json. The site must be served over http(s) — GitHub Pages does this automatically.</p>';});
+</script></body></html>
