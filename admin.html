@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Gallery Admin — Jim Killeen Photography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F4F2EC;--panel:#fff;--ink:#1B1A16;--muted:#7A756A;--hair:#E0DBD0;--select:#E4123A;--ok:#1f7a3d;--err:#b4232c}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:"Archivo",system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5}
+.mono{font-family:"Space Mono",monospace}
+.bar{background:#000;padding:18px;display:flex;justify-content:center}.bar img{width:100%;max-width:420px;display:block}
+.wrap{max-width:900px;margin:0 auto;padding:22px}
+h1{font-size:20px;letter-spacing:-.01em;margin:6px 0 2px}
+.sub{color:var(--muted);font-size:13px;margin-bottom:20px}
+.card{background:var(--panel);border:1px solid var(--hair);border-radius:8px;padding:18px;margin-bottom:18px}
+.card h2{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin:0 0 14px;font-family:"Space Mono",monospace}
+label{display:block;font-size:12px;color:var(--muted);margin:10px 0 4px;font-weight:600;letter-spacing:.02em}
+input,select{width:100%;padding:9px 11px;border:1px solid var(--hair);border-radius:6px;font:inherit;background:#fff;color:var(--ink)}
+input:focus,select:focus{outline:2px solid var(--select);outline-offset:0;border-color:transparent}
+.row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.btn{appearance:none;border:0;border-radius:6px;padding:10px 16px;font:inherit;font-weight:600;cursor:pointer;background:var(--ink);color:#fff;transition:opacity .15s}
+.btn:hover{opacity:.88}.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.red{background:var(--select)}.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--hair)}
+.status{font-size:13px;margin-top:10px;font-family:"Space Mono",monospace}
+.status.ok{color:var(--ok)}.status.err{color:var(--err)}
+.drop{border:2px dashed var(--hair);border-radius:10px;padding:34px 20px;text-align:center;color:var(--muted);cursor:pointer;transition:.15s;background:#fff}
+.drop.hot{border-color:var(--select);background:#fff5f6;color:var(--ink)}.drop b{color:var(--ink)}
+.queue{margin-top:16px;display:flex;flex-direction:column;gap:12px}
+.item{display:grid;grid-template-columns:88px 1fr auto;gap:14px;align-items:center;border:1px solid var(--hair);border-radius:8px;padding:10px;background:#fff}
+.item img{width:88px;height:88px;object-fit:cover;border-radius:5px;background:#eee}
+.item .f{display:grid;gap:8px}
+.item .pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.item input{padding:7px 9px}
+.rm{background:none;border:0;color:var(--muted);cursor:pointer;font-size:20px;padding:6px}.rm:hover{color:var(--err)}
+.log{font-family:"Space Mono",monospace;font-size:12px;background:#111;color:#d7d2c6;border-radius:8px;padding:14px;max-height:260px;overflow:auto;white-space:pre-wrap;margin-top:14px;display:none}
+.log.show{display:block}.log .ok{color:#7fe0a1}.log .er{color:#ff8b8b}.log .hl{color:#ffd27f}
+details{margin-top:8px}summary{cursor:pointer;color:var(--muted);font-size:12px}
+.help{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.55}.help code{background:#eee;padding:1px 5px;border-radius:4px;font-family:"Space Mono",monospace}
+a{color:var(--select)}
+</style></head>
+<body>
+<div class="bar"><img src="assets/LogoBlackBG.jpg" onerror="this.style.display='none'" alt="Jim Killeen Photography"></div>
+<div class="wrap">
+  <h1>Gallery Admin</h1>
+  <div class="sub">Drag in photos, set a title, category, and subcategory, then publish. Images are resized in your browser and committed straight to your GitHub Pages repo — the live gallery updates within a minute.</div>
+
+  <div class="card">
+    <h2>1 · Connect to your repo</h2>
+    <div class="row">
+      <div><label>GitHub owner</label><input id="owner" placeholder="your-github-username"></div>
+      <div><label>Repository</label><input id="repo" placeholder="repo-name"></div>
+      <div><label>Branch</label><input id="branch" placeholder="master" value="master"></div>
+    </div>
+    <label>Access token (fine-grained PAT, Contents: Read &amp; write)</label>
+    <input id="token" type="password" placeholder="github_pat_...">
+    <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn" id="save">Save &amp; test connection</button>
+      <button class="btn ghost" id="forget">Forget token</button>
+    </div>
+    <div class="status" id="connStatus"></div>
+    <details><summary>How do I get a token?</summary>
+      <div class="help">Click your profile picture (top-right) → <b>Settings</b> → scroll to <b>Developer settings</b> (bottom of left sidebar) → <b>Personal access tokens → Fine-grained tokens → Generate new token</b>. Set <b>Repository access</b> to only this repo, and under <b>Permissions → Repository → Contents</b> choose <code>Read and write</code>. The token is stored only in this browser. For safety, run this admin page from your own computer rather than publishing it.</div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>2 · Add photos</h2>
+    <div class="drop" id="drop"><b>Drop photos here</b> or click to choose &mdash; full-size files are fine, they're resized automatically.</div>
+    <input type="file" id="file" accept="image/*" multiple hidden>
+    <div class="queue" id="queue"></div>
+    <datalist id="cats"></datalist>
+    <datalist id="subcats"></datalist>
+  </div>
+
+  <div class="card">
+    <h2>3 · Publish</h2>
+    <button class="btn red" id="publish" disabled>Publish to JimKilleen.com</button>
+    <div class="log" id="log"></div>
+  </div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const LS=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v);}catch(e){return null;}};
+const API='https://api.github.com';
+let CATS=[], SUBS={}, QUEUE=[];
+
+['owner','repo','branch','token'].forEach(k=>{const v=LS('jk_'+k);if(v)$(k).value=v;});
+$('save').onclick=async()=>{['owner','repo','branch','token'].forEach(k=>LS('jk_'+k,$(k).value.trim()));await testConn();};
+$('forget').onclick=()=>{LS('jk_token','');$('token').value='';setStatus('connStatus','Token cleared from this browser.','');};
+function setStatus(id,msg,cls){const el=$(id);el.textContent=msg;el.className='status '+(cls||'');}
+function hdrs(){return{'Authorization':'Bearer '+$('token').value.trim(),'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'};}
+function cfg(){return{owner:$('owner').value.trim(),repo:$('repo').value.trim(),branch:$('branch').value.trim()||'master'};}
+
+async function testConn(){
+  const {owner,repo,branch}=cfg();
+  if(!owner||!repo||!$('token').value.trim()){setStatus('connStatus','Fill in owner, repo, and token first.','err');return false;}
+  setStatus('connStatus','Testing…','');
+  try{
+    const r=await fetch(`${API}/repos/${owner}/${repo}`,{headers:hdrs()});
+    if(!r.ok)throw new Error(r.status===404?'Repo not found (check owner/repo)':r.status===401?'Bad token':('HTTP '+r.status));
+    const rd=await r.json();await loadMeta();
+    setStatus('connStatus','Connected to '+rd.full_name+' · branch '+branch,'ok');
+    updatePublish();return true;
+  }catch(e){setStatus('connStatus','✗ '+e.message,'err');return false;}
+}
+async function loadMeta(){
+  const {owner,repo,branch}=cfg();
+  try{
+    const r=await fetch(`${API}/repos/${owner}/${repo}/contents/photos.json?ref=${branch}`,{headers:hdrs()});
+    if(r.ok){const j=await r.json();const data=JSON.parse(decodeURIComponent(escape(atob(j.content.replace(/\n/g,'')))));CATS=data.cats||[];SUBS=data.subcats||{};}
+  }catch(e){}
+  $('cats').innerHTML=CATS.map(c=>`<option value="${c}">`).join('');
+  const allSubs=[...new Set(Object.values(SUBS).flat())];
+  $('subcats').innerHTML=allSubs.map(s=>`<option value="${s}">`).join('');
+}
+
+const drop=$('drop');
+drop.onclick=()=>$('file').click();
+$('file').onchange=e=>addFiles(e.target.files);
+['dragover','dragenter'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('hot');}));
+['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('hot');}));
+drop.addEventListener('drop',e=>addFiles(e.dataTransfer.files));
+function cleanTitle(n){return n.replace(/\.[^.]+$/,'').replace(/[_-]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\s+/g,' ').trim().replace(/\b\w/g,c=>c.toUpperCase());}
+function addFiles(list){
+  [...list].filter(f=>f.type.startsWith('image/')).forEach(f=>{
+    QUEUE.push({file:f,title:cleanTitle(f.name),cat:CATS[0]||'Uncategorized',subcat:'',url:URL.createObjectURL(f)});});
+  renderQueue();
+}
+function renderQueue(){
+  $('queue').innerHTML='';
+  QUEUE.forEach((it,i)=>{
+    const d=document.createElement('div');d.className='item';
+    d.innerHTML=`<img src="${it.url}"><div class="f">
+      <input value="${it.title.replace(/"/g,'&quot;')}" placeholder="Title" data-i="${i}" data-k="title">
+      <div class="pair">
+        <input list="cats" value="${it.cat.replace(/"/g,'&quot;')}" placeholder="Category" data-i="${i}" data-k="cat">
+        <input list="subcats" value="${it.subcat.replace(/"/g,'&quot;')}" placeholder="Subcategory (optional)" data-i="${i}" data-k="subcat">
+      </div></div>
+      <button class="rm" data-i="${i}" title="Remove">&times;</button>`;
+    $('queue').appendChild(d);
+  });
+  $('queue').querySelectorAll('input').forEach(inp=>inp.oninput=e=>{QUEUE[+e.target.dataset.i][e.target.dataset.k]=e.target.value;});
+  $('queue').querySelectorAll('.rm').forEach(b=>b.onclick=e=>{QUEUE.splice(+e.target.dataset.i,1);renderQueue();});
+  updatePublish();
+}
+function updatePublish(){$('publish').disabled=QUEUE.length===0||!$('token').value.trim()||!$('owner').value.trim();}
+
+function resize(file,maxEdge,q){return new Promise(async(res)=>{
+  const bmp=await createImageBitmap(file);let {width:w,height:h}=bmp;const s=Math.min(1,maxEdge/Math.max(w,h));w=Math.round(w*s);h=Math.round(h*s);
+  const cv=document.createElement('canvas');cv.width=w;cv.height=h;cv.getContext('2d').drawImage(bmp,0,0,w,h);
+  cv.toBlob(b=>res({blob:b,w,h}),'image/jpeg',q);});}
+function b64(blob){return new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result.split(',')[1]);fr.readAsDataURL(blob);});}
+function slug(s){return s.replace(/[^A-Za-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,50)||'photo';}
+async function getSha(path){const {owner,repo,branch}=cfg();
+  const r=await fetch(`${API}/repos/${owner}/${repo}/contents/${path}?ref=${branch}`,{headers:hdrs()});
+  if(r.ok){return (await r.json()).sha;}return null;}
+async function putFile(path,content_b64,message){const {owner,repo,branch}=cfg();
+  const sha=await getSha(path);const body={message,content:content_b64,branch};if(sha)body.sha=sha;
+  const r=await fetch(`${API}/repos/${owner}/${repo}/contents/${path}`,{method:'PUT',headers:hdrs(),body:JSON.stringify(body)});
+  if(!r.ok)throw new Error('PUT '+path+' → '+r.status+' '+(await r.text()).slice(0,120));return r.json();}
+function log(m,cls){const l=$('log');l.classList.add('show');l.innerHTML+=`<span class="${cls||''}">${m}</span>\n`;l.scrollTop=l.scrollHeight;}
+
+$('publish').onclick=async()=>{
+  if(!await testConn())return;
+  $('publish').disabled=true;$('log').classList.add('show');$('log').innerHTML='';
+  const {owner,repo,branch}=cfg();const newItems=[];
+  try{
+    for(let i=0;i<QUEUE.length;i++){
+      const it=QUEUE[i];const base=slug(it.title)+'-'+Date.now().toString(36)+i;
+      log(`[${i+1}/${QUEUE.length}] ${it.title} …`,'hl');
+      const disp=await resize(it.file,1600,0.82);const th=await resize(it.file,520,0.73);
+      await putFile(`images/${base}.jpg`,await b64(disp.blob),`Add photo ${base}`);
+      await putFile(`thumbs/${base}.jpg`,await b64(th.blob),`Add thumb ${base}`);
+      newItems.push({file:`${base}.jpg`,title:it.title,cat:it.cat||'Uncategorized',subcat:(it.subcat||'').trim(),w:disp.w,h:disp.h});
+      log('   ✓ uploaded','ok');
+    }
+    log('Updating photos.json …','hl');
+    const gr=await fetch(`${API}/repos/${owner}/${repo}/contents/photos.json?ref=${branch}`,{headers:hdrs()});
+    let data={cats:[],subcats:{},items:[]},sha=null;
+    if(gr.ok){const j=await gr.json();sha=j.sha;data=JSON.parse(decodeURIComponent(escape(atob(j.content.replace(/\n/g,'')))));}
+    if(!data.subcats)data.subcats={};
+    data.items=data.items.concat(newItems);
+    newItems.forEach(n=>{
+      if(!data.cats.includes(n.cat))data.cats.push(n.cat);
+      if(n.subcat){if(!data.subcats[n.cat])data.subcats[n.cat]=[];if(!data.subcats[n.cat].includes(n.subcat))data.subcats[n.cat].push(n.subcat);}
+    });
+    const enc=btoa(unescape(encodeURIComponent(JSON.stringify(data,null,1))));
+    const body={message:`Add ${newItems.length} photo(s) to gallery`,content:enc,branch};if(sha)body.sha=sha;
+    const pr=await fetch(`${API}/repos/${owner}/${repo}/contents/photos.json`,{method:'PUT',headers:hdrs(),body:JSON.stringify(body)});
+    if(!pr.ok)throw new Error('photos.json → '+pr.status+' '+(await pr.text()).slice(0,120));
+    log(`\n✓ Done. Added ${newItems.length} photo(s). Your gallery refreshes in about a minute.`,'ok');
+    QUEUE=[];renderQueue();
+  }catch(e){log('\n✗ '+e.message,'er');$('publish').disabled=false;}
+};
+</script></body></html>
