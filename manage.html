@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Gallery Manager — Jim Killeen Photography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F4F2EC;--panel:#fff;--ink:#1B1A16;--muted:#7A756A;--hair:#E0DBD0;--select:#E4123A;--ok:#1f7a3d;--err:#b4232c}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:"Archivo",system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5}
+.mono{font-family:"Space Mono",monospace}
+.bar{background:#000;padding:18px;display:flex;justify-content:center}.bar img{width:100%;max-width:420px;display:block}
+.wrap{max-width:1040px;margin:0 auto;padding:22px}
+h1{font-size:20px;margin:6px 0 2px}.sub{color:var(--muted);font-size:13px;margin-bottom:20px}
+.card{background:var(--panel);border:1px solid var(--hair);border-radius:8px;padding:18px;margin-bottom:18px}
+.card h2{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin:0 0 14px;font-family:"Space Mono",monospace}
+label{display:block;font-size:12px;color:var(--muted);margin:10px 0 4px;font-weight:600}
+input,select{width:100%;padding:9px 11px;border:1px solid var(--hair);border-radius:6px;font:inherit;background:#fff;color:var(--ink)}
+input:focus,select:focus{outline:2px solid var(--select);border-color:transparent}
+.row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.btn{appearance:none;border:0;border-radius:6px;padding:10px 16px;font:inherit;font-weight:600;cursor:pointer;background:var(--ink);color:#fff}
+.btn:hover{opacity:.88}.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.red{background:var(--select)}.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--hair)}
+.status{font-size:13px;margin-top:10px;font-family:"Space Mono",monospace}.status.ok{color:var(--ok)}.status.err{color:var(--err)}
+#workspace{display:none}
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.toolbar input,.toolbar select{width:auto;flex:0 0 auto}.toolbar .search{flex:1 1 200px;width:auto}
+.badge{font-family:"Space Mono",monospace;font-size:11px;color:#fff;background:var(--select);padding:3px 8px;border-radius:999px;display:none}
+.shown{font-family:"Space Mono",monospace;font-size:11.5px;color:var(--muted);margin-left:auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.pcard{border:1px solid var(--hair);border-radius:8px;overflow:hidden;cursor:pointer;background:#fff;transition:.15s}
+.pcard:hover{border-color:var(--select);box-shadow:0 4px 14px rgba(0,0,0,.08)}
+.pcard img{width:100%;aspect-ratio:1;object-fit:cover;display:block;background:#eee}
+.pcard .pt{font-size:12.5px;font-weight:600;padding:7px 8px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pcard .pc{font-family:"Space Mono",monospace;font-size:10px;color:var(--muted);padding:1px 8px 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+details{margin-bottom:14px}summary{cursor:pointer;font-family:"Space Mono",monospace;font-size:12px;color:var(--muted)}
+.crow{display:grid;grid-template-columns:1fr auto auto;gap:6px;margin-top:8px;align-items:center}
+.mini{appearance:none;border:1px solid var(--hair);background:#fff;border-radius:5px;width:34px;height:34px;cursor:pointer}.mini:disabled{opacity:.35;cursor:default}
+.log{font-family:"Space Mono",monospace;font-size:12px;background:#111;color:#d7d2c6;border-radius:8px;padding:14px;max-height:220px;overflow:auto;white-space:pre-wrap;margin-top:14px;display:none}
+.log.show{display:block}.log .ok{color:#7fe0a1}.log .er{color:#ff8b8b}
+.modal{position:fixed;inset:0;background:rgba(16,15,12,.6);display:none;z-index:50;align-items:center;justify-content:center;padding:20px}
+.modal.open{display:flex}
+.sheet{background:#fff;border-radius:12px;max-width:460px;width:100%;padding:20px}
+.sheet img{width:100%;max-height:240px;object-fit:contain;background:#f2efe8;border-radius:6px;margin-bottom:12px}
+.sheet .acts{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.help{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.55}.help code{background:#eee;padding:1px 5px;border-radius:4px;font-family:"Space Mono",monospace}
+a{color:var(--select)}
+</style></head>
+<body>
+<div class="bar"><img src="assets/LogoBlackBG.jpg" onerror="this.style.display='none'" alt="Jim Killeen Photography"></div>
+<div class="wrap">
+  <h1>Gallery Manager</h1>
+  <div class="sub">Browse your live photos, click any one to edit its title, category, or subcategory (or remove it), then publish. Changes are written back to <span class="mono">photos.json</span>.</div>
+
+  <div class="card">
+    <h2>Connect</h2>
+    <div class="row">
+      <div><label>GitHub owner</label><input id="owner" placeholder="your-github-username"></div>
+      <div><label>Repository</label><input id="repo" placeholder="repo-name"></div>
+      <div><label>Branch</label><input id="branch" value="master"></div>
+    </div>
+    <label>Access token (fine-grained PAT, Contents: Read &amp; write)</label>
+    <input id="token" type="password" placeholder="github_pat_...">
+    <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn" id="save">Connect &amp; load photos</button>
+      <button class="btn ghost" id="forget">Forget token</button>
+    </div>
+    <div class="status" id="connStatus"></div>
+    <div class="help">This page shares its login with <code>admin.html</code> — if you've already connected there in this browser, your details are pre-filled.</div>
+  </div>
+
+  <div id="workspace">
+    <div class="card">
+      <h2>Photos</h2>
+      <div class="toolbar">
+        <input class="search" id="search" placeholder="Search title / category…">
+        <select id="catFilter"></select>
+        <span class="badge" id="dirty">unsaved changes</span>
+        <button class="btn red" id="publish" disabled>Publish changes</button>
+        <span class="shown" id="shown"></span>
+      </div>
+      <details>
+        <summary>Manage categories (rename &amp; reorder)</summary>
+        <div id="catList"></div>
+        <div class="help">Renaming a category updates every photo in it. Order here controls the order of the filter buttons on your site.</div>
+      </details>
+      <div class="grid" id="grid"></div>
+      <div class="log" id="log"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="modal">
+  <div class="sheet">
+    <img id="eImg" alt="">
+    <label>Title</label><input id="eTitle">
+    <div class="row" style="grid-template-columns:1fr 1fr">
+      <div><label>Category</label><input id="eCat" list="eCats"></div>
+      <div><label>Subcategory (optional)</label><input id="eSub" list="eSubs"></div>
+    </div>
+    <div class="acts">
+      <button class="btn" id="eSave">Save</button>
+      <button class="btn ghost" id="eCancel">Cancel</button>
+      <button class="btn red" id="eDelete" style="margin-left:auto">Delete photo</button>
+    </div>
+  </div>
+</div>
+<datalist id="eCats"></datalist><datalist id="eSubs"></datalist>
+
+<script>
+const $=id=>document.getElementById(id);
+const LS=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v);}catch(e){return null;}};
+const API='https://api.github.com';
+let DATA=null, SHA=null, DELETES=new Set(), dirty=false, editIdx=-1;
+
+['owner','repo','branch','token'].forEach(k=>{const v=LS('jk_'+k);if(v)$(k).value=v;});
+$('save').onclick=async()=>{['owner','repo','branch','token'].forEach(k=>LS('jk_'+k,$(k).value.trim()));await connect();};
+$('forget').onclick=()=>{LS('jk_token','');$('token').value='';setStatus('Token cleared from this browser.','');};
+function setStatus(m,c){const e=$('connStatus');e.textContent=m;e.className='status '+(c||'');}
+function hdrs(){return{'Authorization':'Bearer '+$('token').value.trim(),'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'};}
+function cfg(){return{owner:$('owner').value.trim(),repo:$('repo').value.trim(),branch:$('branch').value.trim()||'master'};}
+
+async function connect(){
+  const {owner,repo}=cfg();
+  if(!owner||!repo||!$('token').value.trim()){setStatus('Fill in owner, repo, and token first.','err');return;}
+  setStatus('Connecting…','');
+  try{
+    const r=await fetch(`${API}/repos/${owner}/${repo}`,{headers:hdrs()});
+    if(!r.ok)throw new Error(r.status===404?'Repo not found (check owner/repo)':r.status===401?'Bad token':('HTTP '+r.status));
+    await loadData();
+    setStatus('Connected — '+DATA.items.length+' photos loaded.','ok');
+    $('workspace').style.display='block';
+  }catch(e){setStatus('✗ '+e.message,'err');}
+}
+async function loadData(){
+  const {owner,repo,branch}=cfg();
+  const r=await fetch(`${API}/repos/${owner}/${repo}/contents/photos.json?ref=${branch}`,{headers:hdrs()});
+  if(!r.ok)throw new Error('Could not load photos.json ('+r.status+')');
+  const j=await r.json();SHA=j.sha;
+  DATA=JSON.parse(decodeURIComponent(escape(atob(j.content.replace(/\n/g,'')))));
+  DATA.cats=DATA.cats||[];DATA.subcats=DATA.subcats||{};DATA.items=DATA.items||[];
+  DELETES=new Set();setDirty(false);buildFilters();renderCats();renderGrid();
+}
+function buildFilters(){$('catFilter').innerHTML='<option value="">All categories</option>'+DATA.cats.map(c=>`<option>${c}</option>`).join('');}
+function renderGrid(){
+  const q=$('search').value.trim().toLowerCase(),cf=$('catFilter').value,grid=$('grid');grid.innerHTML='';
+  DATA.items.forEach((it,i)=>{
+    if(cf&&it.cat!==cf)return;
+    if(q&&!(`${it.title} ${it.cat} ${it.subcat||''}`.toLowerCase().includes(q)))return;
+    const d=document.createElement('div');d.className='pcard';
+    d.innerHTML=`<img loading="lazy" src="thumbs/${it.file}" alt=""><div class="pt">${it.title}</div><div class="pc">${it.cat}${it.subcat?' · '+it.subcat:''}</div>`;
+    d.onclick=()=>openEdit(i);grid.appendChild(d);
+  });
+  $('shown').textContent=grid.children.length+' of '+DATA.items.length;
+}
+$('search').oninput=renderGrid;$('catFilter').onchange=renderGrid;
+
+function openEdit(i){editIdx=i;const it=DATA.items[i];
+  $('eImg').src='thumbs/'+it.file;$('eTitle').value=it.title;$('eCat').value=it.cat;$('eSub').value=it.subcat||'';
+  $('eCats').innerHTML=DATA.cats.map(c=>`<option value="${c}">`).join('');
+  $('eSubs').innerHTML=[...new Set(Object.values(DATA.subcats).flat())].map(s=>`<option value="${s}">`).join('');
+  $('modal').classList.add('open');
+}
+function closeModal(){$('modal').classList.remove('open');editIdx=-1;}
+$('eCancel').onclick=closeModal;$('modal').onclick=e=>{if(e.target===$('modal'))closeModal();};
+$('eSave').onclick=()=>{
+  const it=DATA.items[editIdx];
+  it.title=$('eTitle').value.trim()||it.title;
+  const nc=$('eCat').value.trim()||it.cat,ns=$('eSub').value.trim();
+  it.cat=nc;it.subcat=ns;
+  if(!DATA.cats.includes(nc))DATA.cats.push(nc);
+  if(ns){DATA.subcats[nc]=DATA.subcats[nc]||[];if(!DATA.subcats[nc].includes(ns))DATA.subcats[nc].push(ns);}
+  closeModal();setDirty(true);buildFilters();renderCats();renderGrid();
+};
+$('eDelete').onclick=()=>{
+  const it=DATA.items[editIdx];
+  if(!confirm('Remove "'+it.title+'" from the gallery? Its image files are deleted when you publish.'))return;
+  DELETES.add(it.file);DATA.items.splice(editIdx,1);closeModal();setDirty(true);renderGrid();
+};
+
+function renderCats(){
+  const box=$('catList');box.innerHTML='';
+  DATA.cats.forEach((c,i)=>{
+    const row=document.createElement('div');row.className='crow';
+    row.innerHTML=`<input value="${c.replace(/"/g,'&quot;')}" data-i="${i}">
+      <button class="mini" data-up="${i}" ${i===0?'disabled':''}>&#9650;</button>
+      <button class="mini" data-dn="${i}" ${i===DATA.cats.length-1?'disabled':''}>&#9660;</button>`;
+    box.appendChild(row);
+  });
+  box.querySelectorAll('input').forEach(inp=>inp.onchange=e=>renameCat(+e.target.dataset.i,e.target.value.trim()));
+  box.querySelectorAll('[data-up]').forEach(b=>b.onclick=e=>moveCat(+e.currentTarget.dataset.up,-1));
+  box.querySelectorAll('[data-dn]').forEach(b=>b.onclick=e=>moveCat(+e.currentTarget.dataset.dn,1));
+}
+function moveCat(i,d){const j=i+d;if(j<0||j>=DATA.cats.length)return;const a=DATA.cats;[a[i],a[j]]=[a[j],a[i]];setDirty(true);renderCats();buildFilters();renderGrid();}
+function renameCat(i,nn){
+  const old=DATA.cats[i];if(!nn||nn===old){renderCats();return;}
+  DATA.items.forEach(it=>{if(it.cat===old)it.cat=nn;});
+  if(DATA.subcats[old]){const merged=(DATA.subcats[nn]||[]).concat(DATA.subcats[old].filter(s=>!(DATA.subcats[nn]||[]).includes(s)));DATA.subcats[nn]=merged;delete DATA.subcats[old];}
+  if(DATA.cats.includes(nn)&&nn!==old){DATA.cats.splice(i,1);}else{DATA.cats[i]=nn;}
+  setDirty(true);renderCats();buildFilters();renderGrid();
+}
+
+function setDirty(v){dirty=v;$('publish').disabled=!v;$('dirty').style.display=v?'inline':'none';}
+function log(m,c){const l=$('log');l.classList.add('show');if(m==='')l.innerHTML='';else l.innerHTML+=`<span class="${c||''}">${m}</span>\n`;l.scrollTop=l.scrollHeight;}
+async function getSha(path){const {owner,repo,branch}=cfg();const r=await fetch(`${API}/repos/${owner}/${repo}/contents/${path}?ref=${branch}`,{headers:hdrs()});if(r.ok)return (await r.json()).sha;return null;}
+async function delFile(path,sha,msg){const {owner,repo,branch}=cfg();const r=await fetch(`${API}/repos/${owner}/${repo}/contents/${path}`,{method:'DELETE',headers:hdrs(),body:JSON.stringify({message:msg,sha,branch})});if(!r.ok)throw new Error('HTTP '+r.status);}
+
+$('publish').onclick=async()=>{
+  if(!dirty)return;
+  $('publish').disabled=true;log('');
+  const {owner,repo,branch}=cfg();
+  try{
+    for(const f of DELETES){
+      for(const p of ['images/'+f,'thumbs/'+f]){
+        try{const s=await getSha(p);if(s){await delFile(p,s,'Remove '+p);log('deleted '+p,'ok');}}
+        catch(e){log('could not delete '+p+' ('+e.message+')','er');}
+      }
+    }
+    const enc=btoa(unescape(encodeURIComponent(JSON.stringify(DATA,null,1))));
+    const body={message:'Update photos.json (metadata edits)',content:enc,branch};if(SHA)body.sha=SHA;
+    const r=await fetch(`${API}/repos/${owner}/${repo}/contents/photos.json`,{method:'PUT',headers:hdrs(),body:JSON.stringify(body)});
+    if(!r.ok)throw new Error('photos.json → '+r.status+' '+(await r.text()).slice(0,140));
+    SHA=(await r.json()).content.sha;
+    DELETES=new Set();setDirty(false);
+    log('\n✓ Saved. Your gallery updates in about a minute.','ok');
+  }catch(e){log('\n✗ '+e.message,'er');setDirty(true);}
+};
+</script></body></html>

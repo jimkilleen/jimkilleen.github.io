@@ -29,9 +29,6 @@ input:focus,select:focus{outline:2px solid var(--select);outline-offset:0;border
 .queue{margin-top:16px;display:flex;flex-direction:column;gap:12px}
 .item{display:grid;grid-template-columns:88px 1fr auto;gap:14px;align-items:center;border:1px solid var(--hair);border-radius:8px;padding:10px;background:#fff}
 .item img{width:88px;height:88px;object-fit:cover;border-radius:5px;background:#eee}
-.item .ph{width:88px;height:88px;border-radius:5px;background:#f1eee7;border:1px dashed var(--hair);display:flex;align-items:center;justify-content:center;font-family:"Space Mono",monospace;font-size:11px;color:var(--muted);text-align:center;padding:4px}
-.item .note{font-family:"Space Mono",monospace;font-size:11px;margin-top:2px}
-.item .note.conv{color:var(--muted)}.item .note.err{color:var(--err)}
 .item .f{display:grid;gap:8px}
 .item .pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .item input{padding:7px 9px}
@@ -41,8 +38,7 @@ input:focus,select:focus{outline:2px solid var(--select);outline-offset:0;border
 details{margin-top:8px}summary{cursor:pointer;color:var(--muted);font-size:12px}
 .help{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.55}.help code{background:#eee;padding:1px 5px;border-radius:4px;font-family:"Space Mono",monospace}
 a{color:var(--select)}
-</style><script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
-</head>
+</style></head>
 <body>
 <div class="bar"><img src="assets/LogoBlackBG.jpg" onerror="this.style.display='none'" alt="Jim Killeen Photography"></div>
 <div class="wrap">
@@ -71,7 +67,7 @@ a{color:var(--select)}
   <div class="card">
     <h2>2 · Add photos</h2>
     <div class="drop" id="drop"><b>Drop photos here</b> or click to choose &mdash; full-size files are fine, they're resized automatically.</div>
-    <input type="file" id="file" accept=".heic,.heif,image/*" multiple hidden>
+    <input type="file" id="file" accept="image/*" multiple hidden>
     <div class="queue" id="queue"></div>
     <datalist id="cats"></datalist>
     <datalist id="subcats"></datalist>
@@ -126,38 +122,21 @@ $('file').onchange=e=>addFiles(e.target.files);
 ['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('hot');}));
 drop.addEventListener('drop',e=>addFiles(e.dataTransfer.files));
 function cleanTitle(n){return n.replace(/\.[^.]+$/,'').replace(/[_-]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').replace(/\s+/g,' ').trim().replace(/\b\w/g,c=>c.toUpperCase());}
-function isHeic(f){return /\.(heic|heif)$/i.test(f.name)||f.type==='image/heic'||f.type==='image/heif';}
-function accepted(f){return f.type.startsWith('image/')||/\.(jpe?g|png|gif|webp|heic|heif)$/i.test(f.name);}
-async function addFiles(list){
-  for(const f of [...list]){
-    if(!accepted(f))continue;
-    const it={file:f,title:cleanTitle(f.name),cat:CATS[0]||'Uncategorized',subcat:'',url:'',status:isHeic(f)?'converting':'ready'};
-    QUEUE.push(it);renderQueue();
-    if(isHeic(f)){
-      try{
-        if(typeof heic2any==='undefined')throw new Error('HEIC converter did not load (check your connection).');
-        const out=await heic2any({blob:f,toType:'image/jpeg',quality:0.92});
-        const blob=Array.isArray(out)?out[0]:out;
-        it.file=new File([blob],f.name.replace(/\.(heic|heif)$/i,'.jpg'),{type:'image/jpeg'});
-        it.url=URL.createObjectURL(it.file);it.status='ready';
-      }catch(e){it.status='error';it.err=e.message;}
-      renderQueue();
-    }else{it.url=URL.createObjectURL(f);renderQueue();}
-  }
-  updatePublish();
+function addFiles(list){
+  [...list].filter(f=>f.type.startsWith('image/')).forEach(f=>{
+    QUEUE.push({file:f,title:cleanTitle(f.name),cat:CATS[0]||'Uncategorized',subcat:'',url:URL.createObjectURL(f)});});
+  renderQueue();
 }
 function renderQueue(){
   $('queue').innerHTML='';
   QUEUE.forEach((it,i)=>{
     const d=document.createElement('div');d.className='item';
-    const thumb=it.url?`<img src="${it.url}">`:`<div class="ph">${it.status==='error'?'HEIC ✗':'HEIC…'}</div>`;
-    const note=it.status==='converting'?'<div class="note conv">Converting HEIC…</div>':(it.status==='error'?`<div class="note err">Couldn't convert: ${(it.err||'').replace(/</g,'')}</div>`:'');
-    d.innerHTML=`${thumb}<div class="f">
+    d.innerHTML=`<img src="${it.url}"><div class="f">
       <input value="${it.title.replace(/"/g,'&quot;')}" placeholder="Title" data-i="${i}" data-k="title">
       <div class="pair">
         <input list="cats" value="${it.cat.replace(/"/g,'&quot;')}" placeholder="Category" data-i="${i}" data-k="cat">
         <input list="subcats" value="${it.subcat.replace(/"/g,'&quot;')}" placeholder="Subcategory (optional)" data-i="${i}" data-k="subcat">
-      </div>${note}</div>
+      </div></div>
       <button class="rm" data-i="${i}" title="Remove">&times;</button>`;
     $('queue').appendChild(d);
   });
@@ -165,11 +144,7 @@ function renderQueue(){
   $('queue').querySelectorAll('.rm').forEach(b=>b.onclick=e=>{QUEUE.splice(+e.target.dataset.i,1);renderQueue();updatePublish();});
   updatePublish();
 }
-function updatePublish(){
-  const busy=QUEUE.some(it=>it.status==='converting');
-  const bad=QUEUE.some(it=>it.status==='error');
-  $('publish').disabled=QUEUE.length===0||busy||bad||!$('token').value.trim()||!$('owner').value.trim();
-}
+function updatePublish(){$('publish').disabled=QUEUE.length===0||!$('token').value.trim()||!$('owner').value.trim();}
 
 function resize(file,maxEdge,q){return new Promise(async(res)=>{
   const bmp=await createImageBitmap(file);let {width:w,height:h}=bmp;const s=Math.min(1,maxEdge/Math.max(w,h));w=Math.round(w*s);h=Math.round(h*s);
