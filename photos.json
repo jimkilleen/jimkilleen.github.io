@@ -1,256 +1,297 @@
 {
  "cats": [
-  "Maine & Acadia",
-  "Hawaii",
-  "Singapore",
+  "Travel",
   "Architecture",
   "Nature",
   "Still Life & Abstract",
   "Behind the Lens"
  ],
+ "subcats": {
+  "Travel": [
+   "Hawaii",
+   "Singapore",
+   "Maine & Acadia"
+  ],
+  "Architecture": [
+   "Muhlenberg",
+   "Bridges"
+  ],
+  "Nature": [
+   "Waterfalls",
+   "Botanical",
+   "Trees"
+  ]
+ },
  "items": [
-  {
-   "file": "BassHarborLightHouse-From-MG-2446-7-2-WITH-Channel-Mixing-of.jpg",
-   "title": "Bass Harbor Lighthouse",
-   "cat": "Maine & Acadia",
-   "w": 1082,
-   "h": 1600
-  },
-  {
-   "file": "RoclsSmallCliffAndWall.jpg",
-   "title": "Cliff and Wall",
-   "cat": "Maine & Acadia",
-   "w": 1067,
-   "h": 1600
-  },
-  {
-   "file": "CadillacForegroundIslandsInDistanceForBook-MG-2060.jpg",
-   "title": "Islands from Cadillac Mountain",
-   "cat": "Maine & Acadia",
-   "w": 1067,
-   "h": 1600
-  },
-  {
-   "file": "JordanPond-MG-2149.jpg",
-   "title": "Jordan Pond",
-   "cat": "Maine & Acadia",
-   "w": 1075,
-   "h": 1600
-  },
-  {
-   "file": "Lighthouse-MG-2251.jpg",
-   "title": "Lighthouse I",
-   "cat": "Maine & Acadia",
-   "w": 1430,
-   "h": 976
-  },
-  {
-   "file": "Lighthouse-MG-2267.jpg",
-   "title": "Lighthouse II",
-   "cat": "Maine & Acadia",
-   "w": 1439,
-   "h": 989
-  },
-  {
-   "file": "Lighthouse-MG-2311.jpg",
-   "title": "Lighthouse III",
-   "cat": "Maine & Acadia",
-   "w": 1430,
-   "h": 976
-  },
-  {
-   "file": "Lighthouse-MG-2337.jpg",
-   "title": "Lighthouse IV",
-   "cat": "Maine & Acadia",
-   "w": 1430,
-   "h": 976
-  },
-  {
-   "file": "RocksAtAcadia-MG-2642.jpg",
-   "title": "Rocks at Acadia",
-   "cat": "Maine & Acadia",
-   "w": 1067,
-   "h": 1600
-  },
-  {
-   "file": "StoneBridgeJordanPondWoods-MG-2180.jpg",
-   "title": "Stone Bridge, Jordan Pond Woods",
-   "cat": "Maine & Acadia",
-   "w": 1600,
-   "h": 1066
-  },
-  {
-   "file": "CadillacMountainSunRaysForBook-MG-2060.jpg",
-   "title": "Sun Rays, Cadillac Mountain",
-   "cat": "Maine & Acadia",
-   "w": 1067,
-   "h": 1600
-  },
-  {
-   "file": "SunriseAtBarHarborForBook-MG-2495.jpg",
-   "title": "Sunrise at Bar Harbor",
-   "cat": "Maine & Acadia",
-   "w": 1600,
-   "h": 1089
-  },
-  {
-   "file": "SunsetOverDockCrop2-MG-2489.jpg",
-   "title": "Sunset Over the Dock",
-   "cat": "Maine & Acadia",
-   "w": 1600,
-   "h": 1067
-  },
   {
    "file": "HawaiiCrater-dia-0035.jpg",
    "title": "Crater",
-   "cat": "Hawaii",
+   "cat": "Travel",
+   "subcat": "Hawaii",
    "w": 1240,
    "h": 1025
   },
   {
    "file": "HawaiiDiamondHeadCrater-dia-0135.jpg",
    "title": "Diamond Head",
-   "cat": "Hawaii",
+   "cat": "Travel",
+   "subcat": "Hawaii",
    "w": 1300,
    "h": 1200
   },
   {
    "file": "HawaiiLeaf-dia-0144.jpg",
    "title": "Leaf",
-   "cat": "Hawaii",
+   "cat": "Travel",
+   "subcat": "Hawaii",
    "w": 1600,
    "h": 1077
   },
   {
    "file": "HawaiiPalms-dia-0020.jpg",
    "title": "Palms",
-   "cat": "Hawaii",
+   "cat": "Travel",
+   "subcat": "Hawaii",
    "w": 1240,
    "h": 1025
   },
   {
    "file": "HawaiiPetroglyphs-dia-0003.jpg",
    "title": "Petroglyphs",
-   "cat": "Hawaii",
+   "cat": "Travel",
+   "subcat": "Hawaii",
    "w": 1600,
    "h": 1077
   },
   {
    "file": "HawaiiRockOnBeach-dia-0137.jpg",
    "title": "Rock on the Beach",
-   "cat": "Hawaii",
+   "cat": "Travel",
+   "subcat": "Hawaii",
    "w": 1300,
    "h": 1100
   },
   {
    "file": "HawaiiSteps-dia-0017.jpg",
    "title": "Steps",
-   "cat": "Hawaii",
+   "cat": "Travel",
+   "subcat": "Hawaii",
    "w": 1077,
    "h": 1600
   },
   {
    "file": "HawaiiValley-dia-0006.jpg",
    "title": "Valley",
-   "cat": "Hawaii",
+   "cat": "Travel",
+   "subcat": "Hawaii",
    "w": 1600,
    "h": 1077
   },
   {
    "file": "HawaiiWaterfall-dia-0075.jpg",
    "title": "Waterfall",
-   "cat": "Hawaii",
+   "cat": "Travel",
+   "subcat": "Hawaii",
    "w": 1077,
    "h": 1600
   },
   {
    "file": "HawaiiWaves-dia-0147.jpg",
    "title": "Waves",
-   "cat": "Hawaii",
+   "cat": "Travel",
+   "subcat": "Hawaii",
    "w": 1300,
    "h": 1100
   },
   {
    "file": "SingaporeButterflyHouseIMG-2705.jpg",
    "title": "Butterfly House",
-   "cat": "Singapore",
+   "cat": "Travel",
+   "subcat": "Singapore",
    "w": 1200,
    "h": 1200
   },
   {
    "file": "SingaporeFinancialDistrict-IMG-2565.jpg",
    "title": "Financial District",
-   "cat": "Singapore",
+   "cat": "Travel",
+   "subcat": "Singapore",
    "w": 1200,
    "h": 1200
   },
   {
    "file": "SingaporeFinancialDistrict-IMG-2571.jpg",
    "title": "Financial District II",
-   "cat": "Singapore",
+   "cat": "Travel",
+   "subcat": "Singapore",
    "w": 946,
    "h": 880
   },
   {
    "file": "SinagporeMarketStreetViewIMG-2633.jpg",
    "title": "Market Street View",
-   "cat": "Singapore",
+   "cat": "Travel",
+   "subcat": "Singapore",
    "w": 946,
    "h": 880
   },
   {
    "file": "SingaporeMerlionFountainIMG-2654.jpg",
    "title": "Merlion Fountain",
-   "cat": "Singapore",
+   "cat": "Travel",
+   "subcat": "Singapore",
    "w": 946,
    "h": 880
   },
   {
    "file": "MerlionOnSteps-IMG-2744.jpg",
    "title": "Merlion on the Steps",
-   "cat": "Singapore",
+   "cat": "Travel",
+   "subcat": "Singapore",
    "w": 1600,
    "h": 1200
   },
   {
    "file": "SingaporeTower-IMG-2558.jpg",
    "title": "Singapore Tower",
-   "cat": "Singapore",
+   "cat": "Travel",
+   "subcat": "Singapore",
    "w": 880,
    "h": 946
   },
   {
    "file": "MASTER-SingaporeWaterFront-IMG-2637.jpg",
    "title": "Singapore Waterfront",
-   "cat": "Singapore",
+   "cat": "Travel",
+   "subcat": "Singapore",
    "w": 1095,
    "h": 1600
   },
   {
    "file": "SingaporeSlingHotel-IMG-2658.jpg",
    "title": "The Long Bar, Raffles",
-   "cat": "Singapore",
+   "cat": "Travel",
+   "subcat": "Singapore",
    "w": 1200,
    "h": 1600
   },
   {
    "file": "SingaporeMarket-IMG-2638.jpg",
    "title": "The Market",
-   "cat": "Singapore",
+   "cat": "Travel",
+   "subcat": "Singapore",
    "w": 946,
    "h": 880
   },
   {
    "file": "Singapore3Men-IMG-2599.jpg",
    "title": "Three Men",
-   "cat": "Singapore",
+   "cat": "Travel",
+   "subcat": "Singapore",
    "w": 946,
    "h": 880
   },
   {
-   "file": "BridgeUnderpass-MG-2200.jpg",
-   "title": "Bridge Underpass",
-   "cat": "Architecture",
+   "file": "BassHarborLightHouse-From-MG-2446-7-2-WITH-Channel-Mixing-of.jpg",
+   "title": "Bass Harbor Lighthouse",
+   "cat": "Travel",
+   "subcat": "Maine & Acadia",
+   "w": 1082,
+   "h": 1600
+  },
+  {
+   "file": "RoclsSmallCliffAndWall.jpg",
+   "title": "Cliff and Wall",
+   "cat": "Travel",
+   "subcat": "Maine & Acadia",
+   "w": 1067,
+   "h": 1600
+  },
+  {
+   "file": "CadillacForegroundIslandsInDistanceForBook-MG-2060.jpg",
+   "title": "Islands from Cadillac Mountain",
+   "cat": "Travel",
+   "subcat": "Maine & Acadia",
+   "w": 1067,
+   "h": 1600
+  },
+  {
+   "file": "JordanPond-MG-2149.jpg",
+   "title": "Jordan Pond",
+   "cat": "Travel",
+   "subcat": "Maine & Acadia",
+   "w": 1075,
+   "h": 1600
+  },
+  {
+   "file": "Lighthouse-MG-2251.jpg",
+   "title": "Lighthouse I",
+   "cat": "Travel",
+   "subcat": "Maine & Acadia",
+   "w": 1430,
+   "h": 976
+  },
+  {
+   "file": "Lighthouse-MG-2267.jpg",
+   "title": "Lighthouse II",
+   "cat": "Travel",
+   "subcat": "Maine & Acadia",
+   "w": 1439,
+   "h": 989
+  },
+  {
+   "file": "Lighthouse-MG-2311.jpg",
+   "title": "Lighthouse III",
+   "cat": "Travel",
+   "subcat": "Maine & Acadia",
+   "w": 1430,
+   "h": 976
+  },
+  {
+   "file": "Lighthouse-MG-2337.jpg",
+   "title": "Lighthouse IV",
+   "cat": "Travel",
+   "subcat": "Maine & Acadia",
+   "w": 1430,
+   "h": 976
+  },
+  {
+   "file": "RocksAtAcadia-MG-2642.jpg",
+   "title": "Rocks at Acadia",
+   "cat": "Travel",
+   "subcat": "Maine & Acadia",
+   "w": 1067,
+   "h": 1600
+  },
+  {
+   "file": "StoneBridgeJordanPondWoods-MG-2180.jpg",
+   "title": "Stone Bridge, Jordan Pond Woods",
+   "cat": "Travel",
+   "subcat": "Maine & Acadia",
+   "w": 1600,
+   "h": 1066
+  },
+  {
+   "file": "CadillacMountainSunRaysForBook-MG-2060.jpg",
+   "title": "Sun Rays, Cadillac Mountain",
+   "cat": "Travel",
+   "subcat": "Maine & Acadia",
+   "w": 1067,
+   "h": 1600
+  },
+  {
+   "file": "SunriseAtBarHarborForBook-MG-2495.jpg",
+   "title": "Sunrise at Bar Harbor",
+   "cat": "Travel",
+   "subcat": "Maine & Acadia",
+   "w": 1600,
+   "h": 1089
+  },
+  {
+   "file": "SunsetOverDockCrop2-MG-2489.jpg",
+   "title": "Sunset Over the Dock",
+   "cat": "Travel",
+   "subcat": "Maine & Acadia",
    "w": 1600,
    "h": 1067
   },
@@ -258,6 +299,7 @@
    "file": "ClockTower-IMG-4013.jpg",
    "title": "Clock Tower",
    "cat": "Architecture",
+   "subcat": "Muhlenberg",
    "w": 1067,
    "h": 1600
   },
@@ -265,6 +307,7 @@
    "file": "EgnerChapelForBook.jpg",
    "title": "Egner Chapel",
    "cat": "Architecture",
+   "subcat": "Muhlenberg",
    "w": 1067,
    "h": 1600
   },
@@ -272,6 +315,7 @@
    "file": "EgnerStainedGlass.jpg",
    "title": "Egner Chapel Stained Glass",
    "cat": "Architecture",
+   "subcat": "Muhlenberg",
    "w": 1067,
    "h": 1600
   },
@@ -279,6 +323,7 @@
    "file": "EgnerChapelWideViewHDR.jpg",
    "title": "Egner Chapel, Wide View",
    "cat": "Architecture",
+   "subcat": "Muhlenberg",
    "w": 1081,
    "h": 1600
   },
@@ -286,13 +331,31 @@
    "file": "GeodesicDome.jpg",
    "title": "Geodesic Dome",
    "cat": "Architecture",
+   "subcat": "Muhlenberg",
    "w": 1600,
    "h": 1296
+  },
+  {
+   "file": "MuhlenbergLibrary.jpg",
+   "title": "Muhlenberg Library",
+   "cat": "Architecture",
+   "subcat": "Muhlenberg",
+   "w": 1200,
+   "h": 1600
+  },
+  {
+   "file": "BridgeUnderpass-MG-2200.jpg",
+   "title": "Bridge Underpass",
+   "cat": "Architecture",
+   "subcat": "Bridges",
+   "w": 1600,
+   "h": 1067
   },
   {
    "file": "GirdersAndTunnel-IMG-3962.jpg",
    "title": "Girders and Tunnel",
    "cat": "Architecture",
+   "subcat": "Bridges",
    "w": 1600,
    "h": 583
   },
@@ -300,34 +363,23 @@
    "file": "LehighRiverFromBridgeIMG-3959.jpg",
    "title": "Lehigh River from the Bridge",
    "cat": "Architecture",
+   "subcat": "Bridges",
    "w": 1067,
-   "h": 1600
-  },
-  {
-   "file": "MuhlenbergLibrary.jpg",
-   "title": "Muhlenberg Library",
-   "cat": "Architecture",
-   "w": 1200,
    "h": 1600
   },
   {
    "file": "Schofield-Ford-Covered-Bridge.jpg",
    "title": "Schofield Ford Covered Bridge",
    "cat": "Architecture",
+   "subcat": "Bridges",
    "w": 1600,
    "h": 1067
-  },
-  {
-   "file": "BeeOnFlower-MG-3096.jpg",
-   "title": "Bee on Flower",
-   "cat": "Nature",
-   "w": 1600,
-   "h": 1066
   },
   {
    "file": "BushkillWaterfall-MG-0742.jpg",
    "title": "Bushkill Falls",
    "cat": "Nature",
+   "subcat": "Waterfalls",
    "w": 1067,
    "h": 1600
   },
@@ -335,13 +387,23 @@
    "file": "BushkillWaterfall-dia-0081.jpg",
    "title": "Bushkill Waterfall",
    "cat": "Nature",
+   "subcat": "Waterfalls",
    "w": 1600,
    "h": 1077
+  },
+  {
+   "file": "BeeOnFlower-MG-3096.jpg",
+   "title": "Bee on Flower",
+   "cat": "Nature",
+   "subcat": "Botanical",
+   "w": 1600,
+   "h": 1066
   },
   {
    "file": "Cactus-MG-3795.jpg",
    "title": "Cactus",
    "cat": "Nature",
+   "subcat": "Botanical",
    "w": 1425,
    "h": 870
   },
@@ -349,6 +411,7 @@
    "file": "FernsFinal.jpg",
    "title": "Ferns",
    "cat": "Nature",
+   "subcat": "Botanical",
    "w": 1600,
    "h": 1077
   },
@@ -356,6 +419,7 @@
    "file": "Flowers-MG-3757.jpg",
    "title": "Flowers I",
    "cat": "Nature",
+   "subcat": "Botanical",
    "w": 946,
    "h": 880
   },
@@ -363,6 +427,7 @@
    "file": "Flowers-MG-3761.jpg",
    "title": "Flowers II",
    "cat": "Nature",
+   "subcat": "Botanical",
    "w": 946,
    "h": 880
   },
@@ -370,6 +435,7 @@
    "file": "LeavesOnWater-MG-3781.jpg",
    "title": "Leaves on Water",
    "cat": "Nature",
+   "subcat": "Botanical",
    "w": 1600,
    "h": 1109
   },
@@ -377,55 +443,55 @@
    "file": "Peppers-IMG-3923.jpg",
    "title": "Peppers",
    "cat": "Nature",
+   "subcat": "Botanical",
    "w": 1600,
    "h": 1066
-  },
-  {
-   "file": "RabbitForBook-MG-1523.jpg",
-   "title": "Rabbit",
-   "cat": "Nature",
-   "w": 1600,
-   "h": 1067
   },
   {
    "file": "SpiderOnFlower-MG-3766.jpg",
    "title": "Spider on Flower",
    "cat": "Nature",
+   "subcat": "Botanical",
    "w": 946,
    "h": 880
-  },
-  {
-   "file": "TallStreamView.jpg",
-   "title": "Stream View",
-   "cat": "Nature",
-   "w": 674,
-   "h": 1600
   },
   {
    "file": "SunflowersForBook.jpg",
    "title": "Sunflowers",
    "cat": "Nature",
+   "subcat": "Botanical",
    "w": 1600,
    "h": 1309
-  },
-  {
-   "file": "TallTreesAtWashingtonCrossingIMG-4158.jpg",
-   "title": "Tall Trees, Washington Crossing",
-   "cat": "Nature",
-   "w": 1067,
-   "h": 1600
   },
   {
    "file": "TenLeavesForBook-MG-0879.jpg",
    "title": "Ten Leaves",
    "cat": "Nature",
+   "subcat": "Botanical",
    "w": 1600,
    "h": 1143
+  },
+  {
+   "file": "TallStreamView.jpg",
+   "title": "Stream View",
+   "cat": "Nature",
+   "subcat": "Trees",
+   "w": 674,
+   "h": 1600
+  },
+  {
+   "file": "TallTreesAtWashingtonCrossingIMG-4158.jpg",
+   "title": "Tall Trees, Washington Crossing",
+   "cat": "Nature",
+   "subcat": "Trees",
+   "w": 1067,
+   "h": 1600
   },
   {
    "file": "TreeAlongWalkway.jpg",
    "title": "Tree Along the Walkway",
    "cat": "Nature",
+   "subcat": "Trees",
    "w": 1067,
    "h": 1600
   },
@@ -433,13 +499,23 @@
    "file": "TreeBark-MG-3776.jpg",
    "title": "Tree Bark",
    "cat": "Nature",
+   "subcat": "Trees",
    "w": 946,
    "h": 880
+  },
+  {
+   "file": "RabbitForBook-MG-1523.jpg",
+   "title": "Rabbit",
+   "cat": "Nature",
+   "subcat": "",
+   "w": 1600,
+   "h": 1067
   },
   {
    "file": "Bushmills-3-MG-3051.jpg",
    "title": "Bushmills",
    "cat": "Still Life & Abstract",
+   "subcat": "",
    "w": 800,
    "h": 1200
   },
@@ -447,6 +523,7 @@
    "file": "FallenGlass-MG-3272.jpg",
    "title": "Fallen Glass",
    "cat": "Still Life & Abstract",
+   "subcat": "",
    "w": 1600,
    "h": 1066
   },
@@ -454,6 +531,7 @@
    "file": "GlassAndSmoke2-MG-3142.jpg",
    "title": "Glass and Smoke",
    "cat": "Still Life & Abstract",
+   "subcat": "",
    "w": 1275,
    "h": 1600
   },
@@ -461,6 +539,7 @@
    "file": "HorseSignage-IMG-3885.jpg",
    "title": "Horse Weathervane",
    "cat": "Still Life & Abstract",
+   "subcat": "",
    "w": 1600,
    "h": 682
   },
@@ -468,6 +547,7 @@
    "file": "RockWall-MG-1725.jpg",
    "title": "Rock Wall",
    "cat": "Still Life & Abstract",
+   "subcat": "",
    "w": 1600,
    "h": 1067
   },
@@ -475,6 +555,7 @@
    "file": "Rust-dia-0014.jpg",
    "title": "Rust Study",
    "cat": "Still Life & Abstract",
+   "subcat": "",
    "w": 1600,
    "h": 1077
   },
@@ -482,6 +563,7 @@
    "file": "RustAndShadows.jpg",
    "title": "Rust and Shadows",
    "cat": "Still Life & Abstract",
+   "subcat": "",
    "w": 1600,
    "h": 1077
   },
@@ -489,6 +571,7 @@
    "file": "IMG-2469-StablePost.jpg",
    "title": "Stable Post",
    "cat": "Still Life & Abstract",
+   "subcat": "",
    "w": 1200,
    "h": 1600
   },
@@ -496,6 +579,7 @@
    "file": "ArtFrontPorch.jpg",
    "title": "The Front Porch",
    "cat": "Still Life & Abstract",
+   "subcat": "",
    "w": 1236,
    "h": 1600
   },
@@ -503,6 +587,7 @@
    "file": "JK-IMG-3545.jpg",
    "title": "Among the Boulders",
    "cat": "Behind the Lens",
+   "subcat": "",
    "w": 1146,
    "h": 1080
   },
@@ -510,6 +595,7 @@
    "file": "JK-IMG-3495.jpg",
    "title": "At the Overlook",
    "cat": "Behind the Lens",
+   "subcat": "",
    "w": 946,
    "h": 880
   },
@@ -517,6 +603,7 @@
    "file": "JK-006-3.jpg",
    "title": "In the Mist",
    "cat": "Behind the Lens",
+   "subcat": "",
    "w": 1024,
    "h": 1536
   },
@@ -524,6 +611,7 @@
    "file": "JK-IMG-3973.jpg",
    "title": "Into the Canopy",
    "cat": "Behind the Lens",
+   "subcat": "",
    "w": 880,
    "h": 946
   },
@@ -531,6 +619,7 @@
    "file": "JKonCliff-IMG-3803.jpg",
    "title": "On the Cliff's Edge",
    "cat": "Behind the Lens",
+   "subcat": "",
    "w": 1146,
    "h": 1080
   },
@@ -538,6 +627,7 @@
    "file": "JK-IMG-3593.jpg",
    "title": "On the Red Rocks",
    "cat": "Behind the Lens",
+   "subcat": "",
    "w": 1146,
    "h": 1080
   },
@@ -545,6 +635,7 @@
    "file": "JK-IMG-3967.jpg",
    "title": "Working the Flowers",
    "cat": "Behind the Lens",
+   "subcat": "",
    "w": 880,
    "h": 946
   }

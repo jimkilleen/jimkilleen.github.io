@@ -15,11 +15,15 @@ body{background:var(--paper);color:var(--ink);font-family:"Archivo",system-ui,sa
 .intro{max-width:56ch;margin:22px auto 0;color:#514d45;font-size:14.5px;text-align:center}
 .rule{height:1px;background:var(--hair);margin:20px 0 0}
 .filters{display:flex;flex-wrap:wrap;gap:6px 2px;padding:16px 0 4px;align-items:center;justify-content:center}
+.subfilters{display:none;flex-wrap:wrap;gap:5px 2px;padding:2px 0 4px;align-items:center;justify-content:center}
 .filter{appearance:none;background:none;border:0;cursor:pointer;font-family:"Space Mono",monospace;font-size:12.5px;letter-spacing:.04em;color:var(--muted);padding:6px 11px;border-radius:999px;text-transform:uppercase;position:relative;transition:color .18s}
 .filter:hover{color:var(--ink)}.filter[aria-pressed="true"]{color:var(--ink)}
 .filter[aria-pressed="true"]::after{content:"";position:absolute;left:10px;right:10px;bottom:1px;height:2px;background:var(--select);border-radius:2px}
+.subfilters .filter{font-size:11px;color:#9a948a;padding:4px 9px;text-transform:none;letter-spacing:.02em}
+.subfilters .filter[aria-pressed="true"]{color:var(--ink)}
+.subfilters .filter[aria-pressed="true"]::after{background:var(--ink);height:1.5px}
 .count{width:100%;text-align:center;margin-top:8px;font-family:"Space Mono",monospace;font-size:11.5px;color:var(--muted);letter-spacing:.05em}
-.grid{columns:4 250px;column-gap:16px;padding:18px 0 40px}
+.grid{columns:4 250px;column-gap:16px;padding:14px 0 40px}
 figure.card{break-inside:avoid;margin:0 0 16px;position:relative;cursor:pointer;background:var(--panel);border-radius:3px;overflow:hidden;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s}
 figure.card:hover{transform:translateY(-3px);box-shadow:0 2px 4px rgba(27,26,22,.08),0 16px 34px rgba(27,26,22,.16)}
 figure.card img{display:block;width:100%;height:auto;background:var(--hair)}
@@ -40,11 +44,12 @@ footer{border-top:1px solid var(--hair);padding:22px 0 44px;color:var(--muted);f
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style></head>
 <body>
-<div class="logobar"><img src="assets/LogoBlackBG.jpg" alt="Jim Killeen Photography — Art · Design · Retouching"></div>
+<div class="logobar"><img src="assets/LogoBlackBG.jpg" alt="Jim Killeen Photography"></div>
 <div class="wrap">
-  <p class="intro">Selected images &mdash; landscapes from Acadia and the Maine coast, Hawaii, and Singapore, alongside architecture, nature studies, and still life.</p>
+  <p class="intro">Selected images &mdash; travel work from Acadia, Hawaii, and Singapore, alongside architecture, nature studies, and still life.</p>
   <div class="rule"></div>
   <div class="filters" id="filters"></div>
+  <div class="subfilters" id="subfilters"></div>
   <main class="grid" id="grid" aria-label="Photo gallery"></main>
 </div>
 <footer class="wrap"><span>&copy; Jim Killeen &mdash; All rights reserved</span><span id="fcount"></span></footer>
@@ -55,35 +60,41 @@ footer{border-top:1px solid var(--hair);padding:22px 0 44px;color:var(--muted);f
   <div class="lb-nav"><button class="lb-btn" id="lbPrev" aria-label="Previous">&lsaquo;</button><button class="lb-btn" id="lbNext" aria-label="Next">&rsaquo;</button></div></div>
 </div>
 <script>
-let PHOTOS=[], CATS_ORDER=[], active='All', current=0, view=[];
-const grid=document.getElementById('grid'), filters=document.getElementById('filters'), fcount=document.getElementById('fcount');
-function boot(){
-  const cats=['All']; CATS_ORDER.forEach(c=>{if(PHOTOS.some(p=>p.cat===c))cats.push(c);});
-  PHOTOS.forEach(p=>{if(!cats.includes(p.cat))cats.push(p.cat);});
-  filters.innerHTML='';
-  cats.forEach(c=>{const b=document.createElement('button');b.className='filter';b.textContent=c;b.setAttribute('aria-pressed',c===active);b.onclick=()=>{active=c;render();};filters.appendChild(b);});
-  const cnt=document.createElement('span');cnt.className='count';cnt.id='cnt';filters.appendChild(cnt);
-  render();
+let PHOTOS=[], CATS=[], SUBS={}, activeCat='All', activeSub='All', current=0, view=[];
+const grid=document.getElementById('grid'), fRow=document.getElementById('filters'), sRow=document.getElementById('subfilters'), fcount=document.getElementById('fcount');
+function chip(row,label,pressed,on,sub){const b=document.createElement('button');b.className='filter';b.textContent=label;b.setAttribute('aria-pressed',pressed);b.onclick=on;row.appendChild(b);}
+function renderFilters(){
+  fRow.innerHTML='';
+  ['All',...CATS].forEach(c=>chip(fRow,c,c===activeCat,()=>{activeCat=c;activeSub='All';renderFilters();render();}));
+  const cnt=document.createElement('span');cnt.className='count';cnt.id='cnt';fRow.appendChild(cnt);
+  sRow.innerHTML='';
+  const subs=activeCat!=='All'?(SUBS[activeCat]||[]):[];
+  if(subs.length){sRow.style.display='flex';['All',...subs].forEach(s=>chip(sRow,s,s===activeSub,()=>{activeSub=s;renderFilters();render();},true));}
+  else sRow.style.display='none';
 }
 function render(){
-  [...filters.querySelectorAll('.filter')].forEach(b=>b.setAttribute('aria-pressed',b.textContent===active));
-  view=active==='All'?PHOTOS.slice():PHOTOS.filter(p=>p.cat===active);
+  view=PHOTOS.filter(p=>{
+    if(activeCat!=='All'&&p.cat!==activeCat)return false;
+    if(activeSub!=='All'&&(p.subcat||'')!==activeSub)return false;
+    return true;});
   grid.innerHTML='';
   view.forEach((p,idx)=>{const fig=document.createElement('figure');fig.className='card';
-    fig.innerHTML=`<img loading="lazy" src="${p.thumb}" alt="${p.title}"><figcaption><div class="cap-title">${p.title}</div><div class="cap-cat">${p.cat}</div></figcaption>`;
+    const meta=p.subcat?`${p.cat} · ${p.subcat}`:p.cat;
+    fig.innerHTML=`<img loading="lazy" src="${p.thumb}" alt="${p.title}"><figcaption><div class="cap-title">${p.title}</div><div class="cap-cat">${meta}</div></figcaption>`;
     fig.onclick=()=>openLb(idx);grid.appendChild(fig);});
   const n=view.length;const c=document.getElementById('cnt');if(c)c.textContent=n+' image'+(n===1?'':'s');fcount.textContent=n+' / '+PHOTOS.length+' images';
 }
 const lb=document.getElementById('lb'),lbImg=document.getElementById('lbImg'),lbTitle=document.getElementById('lbTitle'),lbMeta=document.getElementById('lbMeta');
-function openLb(i){current=i;const p=view[i];lbImg.src=p.full;lbImg.alt=p.title;lbTitle.textContent=p.title;lbMeta.innerHTML=`<span class="sel">${String(i+1).padStart(2,'0')}</span> / ${String(view.length).padStart(2,'0')} &middot; ${p.cat}`;lb.classList.add('open');document.body.style.overflow='hidden';}
+function openLb(i){current=i;const p=view[i];lbImg.src=p.full;lbImg.alt=p.title;lbTitle.textContent=p.title;const meta=p.subcat?`${p.cat} &middot; ${p.subcat}`:p.cat;lbMeta.innerHTML=`<span class="sel">${String(i+1).padStart(2,'0')}</span> / ${String(view.length).padStart(2,'0')} &middot; ${meta}`;lb.classList.add('open');document.body.style.overflow='hidden';}
 function closeLb(){lb.classList.remove('open');document.body.style.overflow='';}
 function step(d){openLb((current+d+view.length)%view.length);}
 document.getElementById('lbClose').onclick=closeLb;document.getElementById('lbPrev').onclick=()=>step(-1);document.getElementById('lbNext').onclick=()=>step(1);
 lb.onclick=e=>{if(e.target===lb)closeLb();};
 document.addEventListener('keydown',e=>{if(!lb.classList.contains('open'))return;if(e.key==='Escape')closeLb();if(e.key==='ArrowLeft')step(-1);if(e.key==='ArrowRight')step(1);});
+function boot(){renderFilters();render();}
 fetch('photos.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{
-  CATS_ORDER=d.cats||[];
-  PHOTOS=(d.items||[]).map(i=>({thumb:'thumbs/'+i.file,full:'images/'+i.file,title:i.title,cat:i.cat}));
+  CATS=d.cats||[];SUBS=d.subcats||{};
+  PHOTOS=(d.items||[]).map(i=>({thumb:'thumbs/'+i.file,full:'images/'+i.file,title:i.title,cat:i.cat,subcat:i.subcat||''}));
   boot();
 }).catch(e=>{grid.innerHTML='<p style=\"padding:20px\">Could not load photos.json. The site must be served over http(s) — GitHub Pages does this automatically.</p>';});
 </script></body></html>
