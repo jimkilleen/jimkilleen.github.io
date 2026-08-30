@@ -10,7 +10,8 @@
   "Travel": [
    "Hawaii",
    "Singapore",
-   "Maine & Acadia"
+   "Maine & Acadia",
+   "Jackson Hole Trip"
   ],
   "Architecture": [
    "Muhlenberg",
@@ -638,6 +639,14 @@
    "subcat": "",
    "w": 880,
    "h": 946
+  },
+  {
+   "file": "Grand-Tetons-mtfy5uj10.jpg",
+   "title": "Grand Tetons",
+   "cat": "Travel",
+   "subcat": "Jackson Hole Trip",
+   "w": 1600,
+   "h": 1200
   }
  ]
 }
