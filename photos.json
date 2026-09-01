@@ -520,7 +520,7 @@
    "w": 800,
    "h": 1200
   },
-    {
+  {
    "file": "Blue Drops.jpg",
    "title": "Blue Drops",
    "cat": "Still Life & Abstract",
@@ -655,6 +655,14 @@
    "subcat": "Jackson Hole Trip",
    "w": 1600,
    "h": 1200
+  },
+  {
+   "file": "Blue-Drops-mtj8gs020.jpg",
+   "title": "Blue Drops",
+   "cat": "Still Life & Abstract",
+   "subcat": "",
+   "w": 1600,
+   "h": 1067
   }
  ]
 }
