@@ -9,21 +9,50 @@
 *{box-sizing:border-box}html,body{margin:0}
 body{background:var(--paper);color:var(--ink);font-family:"Archivo",system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.45}
 .mono{font-family:"Space Mono",ui-monospace,monospace}
-.logobar{background:#000;width:100%;padding:26px 18px;display:flex;justify-content:center}
-.logobar img{width:100%;max-width:660px;height:auto;display:block}
+.logobar{background:#000;width:100%;padding:12px 18px;display:flex;justify-content:center}
+.logobar img{max-width:100%;max-height:226px;width:auto;height:auto;display:block}
 .wrap{max-width:1240px;margin:0 auto;padding:0 22px}
-.intro{max-width:56ch;margin:22px auto 0;color:#514d45;font-size:14.5px;text-align:center}
-.rule{height:1px;background:var(--hair);margin:20px 0 0}
-.filters{display:flex;flex-wrap:wrap;gap:6px 2px;padding:16px 0 4px;align-items:center;justify-content:center}
-.subfilters{display:none;flex-wrap:wrap;gap:5px 2px;padding:2px 0 4px;align-items:center;justify-content:center}
-.filter{appearance:none;background:none;border:0;cursor:pointer;font-family:"Space Mono",monospace;font-size:12.5px;letter-spacing:.04em;color:var(--muted);padding:6px 11px;border-radius:999px;text-transform:uppercase;position:relative;transition:color .18s}
-.filter:hover{color:var(--ink)}.filter[aria-pressed="true"]{color:var(--ink)}
-.filter[aria-pressed="true"]::after{content:"";position:absolute;left:10px;right:10px;bottom:1px;height:2px;background:var(--select);border-radius:2px}
-.subfilters .filter{font-size:11px;color:#9a948a;padding:4px 9px;text-transform:none;letter-spacing:.02em}
-.subfilters .filter[aria-pressed="true"]{color:var(--ink)}
-.subfilters .filter[aria-pressed="true"]::after{background:var(--ink);height:1.5px}
-.count{width:100%;text-align:center;margin-top:8px;font-family:"Space Mono",monospace;font-size:11.5px;color:var(--muted);letter-spacing:.05em}
-.grid{columns:4 250px;column-gap:16px;padding:14px 0 40px}
+/* top nav with hamburger */
+.topnav{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--hair)}
+.menubtn{appearance:none;display:inline-flex;align-items:center;gap:9px;background:none;border:0;cursor:pointer;color:var(--ink);font-family:"Space Mono",monospace;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;padding:6px 4px}
+.menubtn .bars{display:inline-block;width:18px;height:12px;position:relative}
+.menubtn .bars i{position:absolute;left:0;right:0;height:2px;background:var(--ink);border-radius:2px}
+.menubtn .bars i:nth-child(1){top:0}.menubtn .bars i:nth-child(2){top:5px}.menubtn .bars i:nth-child(3){top:10px}
+.crumb{font-family:"Space Mono",monospace;font-size:12.5px;letter-spacing:.04em;color:var(--ink)}
+.crumb .sub{color:var(--muted)}
+.navcount{margin-left:auto;font-family:"Space Mono",monospace;font-size:11.5px;color:var(--muted);letter-spacing:.05em}
+/* drawer + scrim */
+.scrim{position:fixed;inset:0;background:rgba(16,15,12,.42);opacity:0;visibility:hidden;transition:opacity .22s;z-index:40}
+.scrim.open{opacity:1;visibility:visible}
+.drawer{position:fixed;top:0;left:0;bottom:0;width:300px;max-width:84vw;background:var(--paper);border-right:1px solid var(--hair);box-shadow:12px 0 40px rgba(27,26,22,.14);transform:translateX(-102%);transition:transform .24s cubic-bezier(.4,0,.2,1);z-index:41;display:flex;flex-direction:column}
+.drawer.open{transform:translateX(0)}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;padding:18px 18px 12px;border-bottom:1px solid var(--hair)}
+.drawer-head h2{margin:0;font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.drawer-close{appearance:none;background:none;border:0;cursor:pointer;font-size:22px;line-height:1;color:var(--muted);padding:2px 6px}
+.drawer-close:hover{color:var(--ink)}
+.menu{flex:1 1 auto;overflow-y:auto;padding:8px 0}
+.mgroup{border-bottom:1px solid rgba(224,219,208,.6)}
+.mrow{display:flex;align-items:stretch}
+.mitem{flex:1 1 auto;appearance:none;background:none;border:0;cursor:pointer;text-align:left;font-family:"Archivo",sans-serif;font-size:15px;color:var(--ink);padding:13px 18px;letter-spacing:.01em}
+.mitem:hover{background:var(--panel)}
+.mgroup.active>.mrow>.mitem{font-weight:700}
+.mgroup.active>.mrow>.mitem::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--select);margin-right:9px;vertical-align:middle}
+.mtog{appearance:none;background:none;border:0;cursor:pointer;color:var(--muted);width:44px;font-size:12px;display:flex;align-items:center;justify-content:center;transition:transform .18s}
+.mtog:hover{color:var(--ink)}
+.mgroup.open .mtog{transform:rotate(90deg)}
+.msub{max-height:0;overflow:hidden;transition:max-height .24s ease;background:var(--panel)}
+.mgroup.open .msub{max-height:340px}
+.msubitem{display:block;width:100%;appearance:none;background:none;border:0;cursor:pointer;text-align:left;font-family:"Archivo",sans-serif;font-size:13.5px;color:var(--muted);padding:9px 18px 9px 34px}
+.msubitem:hover{color:var(--ink);background:#e7e2d7}
+.msubitem.active{color:var(--ink);font-weight:600}
+.msubitem.active::before{content:"—  ";color:var(--select)}
+.menu-admin{border-top:1px solid var(--hair);padding:10px 0 14px}
+.menu-admin .lbl{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:6px 18px 4px}
+.menu-admin a{display:block;text-decoration:none;font-size:14px;color:var(--ink);padding:9px 18px}
+.menu-admin a:hover{background:var(--panel)}
+.menu-admin a::before{content:"›";color:var(--select);margin-right:9px}
+/* gallery (unchanged) */
+.grid{columns:4 250px;column-gap:16px;padding:16px 0 40px}
 figure.card{break-inside:avoid;margin:0 0 16px;position:relative;cursor:pointer;background:var(--panel);border-radius:3px;overflow:hidden;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s}
 figure.card:hover{transform:translateY(-3px);box-shadow:0 2px 4px rgba(27,26,22,.08),0 16px 34px rgba(27,26,22,.16)}
 figure.card img{display:block;width:100%;height:auto;background:var(--hair)}
@@ -40,19 +69,34 @@ figure.card:hover figcaption{opacity:1}
 .lb-btn{appearance:none;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.05);color:#EDEAE1;width:42px;height:42px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s}
 .lb-btn:hover{background:rgba(255,255,255,.14)}.lb-close{position:absolute;top:18px;right:20px}
 footer{border-top:1px solid var(--hair);padding:22px 0 44px;color:var(--muted);font-family:"Space Mono",monospace;font-size:11.5px;letter-spacing:.06em;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
-@media (max-width:560px){.grid{columns:2 150px;column-gap:12px}figure.card{margin-bottom:12px}}
+@media (max-width:560px){.logobar{padding:10px 14px}.logobar img{max-height:150px}.grid{columns:2 150px;column-gap:12px}figure.card{margin-bottom:12px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style></head>
 <body>
 <div class="logobar"><img src="assets/LogoBlackBG.jpg" alt="Jim Killeen Photography"></div>
 <div class="wrap">
-  <p class="intro">Selected images &mdash; travel work from Acadia, Hawaii, and Singapore, alongside architecture, nature studies, and still life.</p>
-  <div class="rule"></div>
-  <div class="filters" id="filters"></div>
-  <div class="subfilters" id="subfilters"></div>
+  <div class="topnav">
+    <button class="menubtn" id="menubtn" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+      <span class="bars"><i></i><i></i><i></i></span>Browse
+    </button>
+    <span class="crumb" id="crumb">All</span>
+    <span class="navcount" id="navcount"></span>
+  </div>
   <main class="grid" id="grid" aria-label="Photo gallery"></main>
 </div>
 <footer class="wrap"><span>&copy; Jim Killeen &mdash; All rights reserved</span><span id="fcount"></span></footer>
+
+<div class="scrim" id="scrim"></div>
+<nav class="drawer" id="drawer" aria-label="Categories" aria-hidden="true">
+  <div class="drawer-head"><h2>Browse</h2><button class="drawer-close" id="drawerClose" aria-label="Close menu">&times;</button></div>
+  <div class="menu" id="menu"></div>
+  <div class="menu-admin" id="menuAdmin" hidden>
+    <div class="lbl">Manage</div>
+    <a href="admin.html">Admin &mdash; add photos</a>
+    <a href="manage.html">Manage &mdash; edit gallery</a>
+  </div>
+</nav>
+
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer">
   <button class="lb-btn lb-close" id="lbClose" aria-label="Close">&times;</button>
   <div class="lb-stage"><img id="lbImg" alt=""></div>
@@ -61,17 +105,58 @@ footer{border-top:1px solid var(--hair);padding:22px 0 44px;color:var(--muted);f
 </div>
 <script>
 let PHOTOS=[], CATS=[], SUBS={}, activeCat='All', activeSub='All', current=0, view=[];
-const grid=document.getElementById('grid'), fRow=document.getElementById('filters'), sRow=document.getElementById('subfilters'), fcount=document.getElementById('fcount');
-function chip(row,label,pressed,on,sub){const b=document.createElement('button');b.className='filter';b.textContent=label;b.setAttribute('aria-pressed',pressed);b.onclick=on;row.appendChild(b);}
-function renderFilters(){
-  fRow.innerHTML='';
-  ['All',...CATS].forEach(c=>chip(fRow,c,c===activeCat,()=>{activeCat=c;activeSub='All';renderFilters();render();}));
-  const cnt=document.createElement('span');cnt.className='count';cnt.id='cnt';fRow.appendChild(cnt);
-  sRow.innerHTML='';
-  const subs=activeCat!=='All'?(SUBS[activeCat]||[]):[];
-  if(subs.length){sRow.style.display='flex';['All',...subs].forEach(s=>chip(sRow,s,s===activeSub,()=>{activeSub=s;renderFilters();render();},true));}
-  else sRow.style.display='none';
+const grid=document.getElementById('grid'), menu=document.getElementById('menu'),
+      crumb=document.getElementById('crumb'), navcount=document.getElementById('navcount'), fcount=document.getElementById('fcount'),
+      drawer=document.getElementById('drawer'), scrim=document.getElementById('scrim'), menubtn=document.getElementById('menubtn');
+
+/* ---------- drawer open/close ---------- */
+function openDrawer(){drawer.classList.add('open');scrim.classList.add('open');menubtn.setAttribute('aria-expanded','true');drawer.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
+function closeDrawer(){drawer.classList.remove('open');scrim.classList.remove('open');menubtn.setAttribute('aria-expanded','false');drawer.setAttribute('aria-hidden','true');document.body.style.overflow='';}
+menubtn.onclick=openDrawer;
+document.getElementById('drawerClose').onclick=closeDrawer;
+scrim.onclick=closeDrawer;
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&drawer.classList.contains('open'))closeDrawer();});
+
+/* ---------- menu build ---------- */
+function hasToken(){try{return !!localStorage.getItem('jk_token');}catch(e){return false;}}
+function catGroup(name,subs){
+  const wrap=document.createElement('div');wrap.className='mgroup';wrap.dataset.cat=name;
+  const row=document.createElement('div');row.className='mrow';
+  const item=document.createElement('button');item.className='mitem';item.textContent=name;item.onclick=()=>selectCat(name);
+  row.appendChild(item);
+  if(subs&&subs.length){
+    const tog=document.createElement('button');tog.className='mtog';tog.setAttribute('aria-label','Toggle '+name+' subcategories');tog.textContent='▸';
+    tog.onclick=e=>{e.stopPropagation();wrap.classList.toggle('open');};
+    row.appendChild(tog);
+  }
+  wrap.appendChild(row);
+  if(subs&&subs.length){
+    const sl=document.createElement('div');sl.className='msub';
+    subs.forEach(s=>{const b=document.createElement('button');b.className='msubitem';b.textContent=s;b.dataset.cat=name;b.dataset.sub=s;b.onclick=()=>selectSub(name,s);sl.appendChild(b);});
+    wrap.appendChild(sl);
+  }
+  return wrap;
 }
+function buildMenu(){
+  menu.innerHTML='';
+  menu.appendChild(catGroup('All',null));
+  CATS.forEach(c=>menu.appendChild(catGroup(c,SUBS[c]||[])));
+  document.getElementById('menuAdmin').hidden=!hasToken();
+  updateMenuActive();
+}
+function updateMenuActive(){
+  menu.querySelectorAll('.mgroup').forEach(g=>{
+    const isCat=g.dataset.cat===activeCat;
+    g.classList.toggle('active',isCat&&activeSub==='All');
+    if(isCat&&(SUBS[activeCat]||[]).length)g.classList.add('open');
+    g.querySelectorAll('.msubitem').forEach(b=>b.classList.toggle('active',b.dataset.cat===activeCat&&b.dataset.sub===activeSub));
+  });
+  crumb.innerHTML=activeCat==='All'?'All':(activeSub!=='All'?`${activeCat} <span class="sub">&middot; ${activeSub}</span>`:activeCat);
+}
+function selectCat(c){activeCat=c;activeSub='All';render();updateMenuActive();closeDrawer();}
+function selectSub(c,s){activeCat=c;activeSub=s;render();updateMenuActive();closeDrawer();}
+
+/* ---------- gallery render ---------- */
 function render(){
   view=PHOTOS.filter(p=>{
     if(activeCat!=='All'&&p.cat!==activeCat)return false;
@@ -82,8 +167,12 @@ function render(){
     const meta=p.subcat?`${p.cat} · ${p.subcat}`:p.cat;
     fig.innerHTML=`<img loading="lazy" src="${p.thumb}" alt="${p.title}"><figcaption><div class="cap-title">${p.title}</div><div class="cap-cat">${meta}</div></figcaption>`;
     fig.onclick=()=>openLb(idx);grid.appendChild(fig);});
-  const n=view.length;const c=document.getElementById('cnt');if(c)c.textContent=n+' image'+(n===1?'':'s');fcount.textContent=n+' / '+PHOTOS.length+' images';
+  const n=view.length;
+  navcount.textContent=n+' image'+(n===1?'':'s');
+  fcount.textContent=n+' / '+PHOTOS.length+' images';
 }
+
+/* ---------- lightbox (unchanged) ---------- */
 const lb=document.getElementById('lb'),lbImg=document.getElementById('lbImg'),lbTitle=document.getElementById('lbTitle'),lbMeta=document.getElementById('lbMeta');
 function openLb(i){current=i;const p=view[i];lbImg.src=p.full;lbImg.alt=p.title;lbTitle.textContent=p.title;const meta=p.subcat?`${p.cat} &middot; ${p.subcat}`:p.cat;lbMeta.innerHTML=`<span class="sel">${String(i+1).padStart(2,'0')}</span> / ${String(view.length).padStart(2,'0')} &middot; ${meta}`;lb.classList.add('open');document.body.style.overflow='hidden';}
 function closeLb(){lb.classList.remove('open');document.body.style.overflow='';}
@@ -91,10 +180,12 @@ function step(d){openLb((current+d+view.length)%view.length);}
 document.getElementById('lbClose').onclick=closeLb;document.getElementById('lbPrev').onclick=()=>step(-1);document.getElementById('lbNext').onclick=()=>step(1);
 lb.onclick=e=>{if(e.target===lb)closeLb();};
 document.addEventListener('keydown',e=>{if(!lb.classList.contains('open'))return;if(e.key==='Escape')closeLb();if(e.key==='ArrowLeft')step(-1);if(e.key==='ArrowRight')step(1);});
-function boot(){renderFilters();render();}
+
+/* ---------- boot ---------- */
+function boot(){buildMenu();render();}
 fetch('photos.json',{cache:'no-store'}).then(r=>r.json()).then(d=>{
   CATS=d.cats||[];SUBS=d.subcats||{};
   PHOTOS=(d.items||[]).map(i=>({thumb:'thumbs/'+i.file,full:'images/'+i.file,title:i.title,cat:i.cat,subcat:i.subcat||''}));
   boot();
-}).catch(e=>{grid.innerHTML='<p style=\"padding:20px\">Could not load photos.json. The site must be served over http(s) — GitHub Pages does this automatically.</p>';});
+}).catch(e=>{grid.innerHTML='<p style="padding:20px">Could not load photos.json. The site must be served over http(s) — GitHub Pages does this automatically.</p>';});
 </script></body></html>
