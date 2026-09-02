@@ -31,7 +31,8 @@ input:focus,select:focus{outline:2px solid var(--select);outline-offset:0;border
 .item img{width:88px;height:88px;object-fit:cover;border-radius:5px;background:#eee}
 .item .f{display:grid;gap:8px}
 .item .pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.item input{padding:7px 9px}
+.item input{padding:7px 9px}.item select{width:100%;padding:7px 9px;border:1px solid var(--hair);border-radius:6px;font:inherit;background:#fff;color:var(--ink)}
+.combo input{margin-top:6px}
 .rm{background:none;border:0;color:var(--muted);cursor:pointer;font-size:20px;padding:6px}.rm:hover{color:var(--err)}
 .log{font-family:"Space Mono",monospace;font-size:12px;background:#111;color:#d7d2c6;border-radius:8px;padding:14px;max-height:260px;overflow:auto;white-space:pre-wrap;margin-top:14px;display:none}
 .log.show{display:block}.log .ok{color:#7fe0a1}.log .er{color:#ff8b8b}.log .hl{color:#ffd27f}
@@ -110,9 +111,7 @@ async function loadMeta(){
     const r=await fetch(`${API}/repos/${owner}/${repo}/contents/photos.json?ref=${branch}`,{headers:hdrs()});
     if(r.ok){const j=await r.json();const data=JSON.parse(decodeURIComponent(escape(atob(j.content.replace(/\n/g,'')))));CATS=data.cats||[];SUBS=data.subcats||{};}
   }catch(e){}
-  $('cats').innerHTML=CATS.map(c=>`<option value="${c}">`).join('');
-  const allSubs=[...new Set(Object.values(SUBS).flat())];
-  $('subcats').innerHTML=allSubs.map(s=>`<option value="${s}">`).join('');
+  renderQueue(); // refresh the queue's category/subcategory pickers with loaded values
 }
 
 const drop=$('drop');
@@ -127,22 +126,57 @@ function addFiles(list){
     QUEUE.push({file:f,title:cleanTitle(f.name),cat:CATS[0]||'Uncategorized',subcat:'',url:URL.createObjectURL(f)});});
   renderQueue();
 }
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
+function optList(values,current,newLabel,includeNone){
+  let o=includeNone?`<option value=""${!current?' selected':''}>— none —</option>`:'';
+  const inList=values.includes(current);
+  o+=values.map(v=>`<option value="${esc(v)}"${v===current?' selected':''}>${esc(v)}</option>`).join('');
+  o+=`<option value="__new__"${(current&&!inList)?' selected':''}>${newLabel}</option>`;
+  return o;
+}
+function subOptions(cat,current){return optList(SUBS[cat]||[],current||'','＋ New subcategory…',true);}
 function renderQueue(){
   $('queue').innerHTML='';
   QUEUE.forEach((it,i)=>{
+    const catInList=CATS.includes(it.cat);
+    const subInList=(SUBS[it.cat]||[]).includes(it.subcat);
     const d=document.createElement('div');d.className='item';
     d.innerHTML=`<img src="${it.url}"><div class="f">
-      <input value="${it.title.replace(/"/g,'&quot;')}" placeholder="Title" data-i="${i}" data-k="title">
+      <input value="${esc(it.title)}" placeholder="Title" data-i="${i}" data-k="title">
       <div class="pair">
-        <input list="cats" value="${it.cat.replace(/"/g,'&quot;')}" placeholder="Category" data-i="${i}" data-k="cat">
-        <input list="subcats" value="${it.subcat.replace(/"/g,'&quot;')}" placeholder="Subcategory (optional)" data-i="${i}" data-k="subcat">
+        <div class="combo">
+          <select class="csel" data-i="${i}">${optList(CATS,it.cat,'＋ New category…',false)}</select>
+          <input class="cnew" data-i="${i}" placeholder="New category name" value="${catInList?'':esc(it.cat)}" style="${catInList?'display:none':''}">
+        </div>
+        <div class="combo">
+          <select class="ssel" data-i="${i}">${subOptions(it.cat,it.subcat)}</select>
+          <input class="snew" data-i="${i}" placeholder="New subcategory name" value="${(subInList||!it.subcat)?'':esc(it.subcat)}" style="${(subInList||!it.subcat)?'display:none':''}">
+        </div>
       </div></div>
       <button class="rm" data-i="${i}" title="Remove">&times;</button>`;
     $('queue').appendChild(d);
   });
-  $('queue').querySelectorAll('input').forEach(inp=>inp.oninput=e=>{QUEUE[+e.target.dataset.i][e.target.dataset.k]=e.target.value;});
-  $('queue').querySelectorAll('.rm').forEach(b=>b.onclick=e=>{QUEUE.splice(+e.target.dataset.i,1);renderQueue();updatePublish();});
+  $('queue').querySelectorAll('input[data-k="title"]').forEach(inp=>inp.oninput=e=>{QUEUE[+e.target.dataset.i].title=e.target.value;});
+  $('queue').querySelectorAll('.csel').forEach(sel=>sel.onchange=e=>onCatSel(e.target));
+  $('queue').querySelectorAll('.cnew').forEach(inp=>inp.oninput=e=>{QUEUE[+e.target.dataset.i].cat=e.target.value.trim();updatePublish();});
+  $('queue').querySelectorAll('.ssel').forEach(sel=>sel.onchange=e=>onSubSel(e.target));
+  $('queue').querySelectorAll('.snew').forEach(inp=>inp.oninput=e=>{QUEUE[+e.target.dataset.i].subcat=e.target.value.trim();});
+  $('queue').querySelectorAll('.rm').forEach(b=>b.onclick=e=>{QUEUE.splice(+e.currentTarget.dataset.i,1);renderQueue();updatePublish();});
   updatePublish();
+}
+function onCatSel(sel){
+  const i=+sel.dataset.i,row=sel.closest('.item'),it=QUEUE[i],cnew=row.querySelector('.cnew');
+  if(sel.value==='__new__'){cnew.style.display='';cnew.value='';cnew.focus();it.cat='';}
+  else{cnew.style.display='none';it.cat=sel.value;}
+  it.subcat='';                                   // subcategories are category-specific — reset
+  const ssel=row.querySelector('.ssel'),snew=row.querySelector('.snew');
+  ssel.innerHTML=subOptions(it.cat,'');snew.style.display='none';snew.value='';
+  updatePublish();
+}
+function onSubSel(sel){
+  const i=+sel.dataset.i,row=sel.closest('.item'),it=QUEUE[i],snew=row.querySelector('.snew');
+  if(sel.value==='__new__'){snew.style.display='';snew.value='';snew.focus();it.subcat='';}
+  else{snew.style.display='none';it.subcat=sel.value;}
 }
 function updatePublish(){$('publish').disabled=QUEUE.length===0||!$('token').value.trim()||!$('owner').value.trim();}
 
