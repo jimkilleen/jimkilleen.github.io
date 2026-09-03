@@ -87,6 +87,9 @@ const API='https://api.github.com';
 let CATS=[], SUBS={}, QUEUE=[];
 
 ['owner','repo','branch','token'].forEach(k=>{const v=LS('jk_'+k);if(v)$(k).value=v;});
+// If credentials are already saved (returning visit), auto-load categories/subcategories on open
+// so the pickers are populated immediately — no need to click "Save & test connection" first.
+if($('owner').value.trim()&&$('repo').value.trim()&&$('token').value.trim())loadMeta();
 $('save').onclick=async()=>{['owner','repo','branch','token'].forEach(k=>LS('jk_'+k,$(k).value.trim()));await testConn();};
 $('forget').onclick=()=>{LS('jk_token','');$('token').value='';setStatus('connStatus','Token cleared from this browser.','');};
 function setStatus(id,msg,cls){const el=$(id);el.textContent=msg;el.className='status '+(cls||'');}
@@ -111,6 +114,8 @@ async function loadMeta(){
     const r=await fetch(`${API}/repos/${owner}/${repo}/contents/photos.json?ref=${branch}`,{headers:hdrs()});
     if(r.ok){const j=await r.json();const data=JSON.parse(decodeURIComponent(escape(atob(j.content.replace(/\n/g,'')))));CATS=data.cats||[];SUBS=data.subcats||{};}
   }catch(e){}
+  // any items added before categories loaded still sit on the placeholder default — point them at a real category
+  if(CATS.length)QUEUE.forEach(it=>{if((!it.cat||it.cat==='Uncategorized')&&!CATS.includes(it.cat))it.cat=CATS[0];});
   renderQueue(); // refresh the queue's category/subcategory pickers with loaded values
 }
 
