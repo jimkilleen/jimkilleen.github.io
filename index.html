@@ -20,7 +20,12 @@ body{background:var(--paper);color:var(--ink);font-family:"Archivo",system-ui,sa
 .menubtn .bars i:nth-child(1){top:0}.menubtn .bars i:nth-child(2){top:5px}.menubtn .bars i:nth-child(3){top:10px}
 .crumb{font-family:"Space Mono",monospace;font-size:12.5px;letter-spacing:.04em;color:var(--ink)}
 .crumb .sub{color:var(--muted)}
-.navcount{margin-left:auto;font-family:"Space Mono",monospace;font-size:11.5px;color:var(--muted);letter-spacing:.05em}
+.navcount{margin-left:14px;font-family:"Space Mono",monospace;font-size:11.5px;color:var(--muted);letter-spacing:.05em}
+.booklink{margin-left:auto;display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--muted);font-family:"Space Mono",monospace;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;transition:color .15s}
+.booklink:hover{color:var(--ink)}
+.booklink img{height:24px;width:auto;display:block;border-radius:2px;box-shadow:0 1px 3px rgba(27,26,22,.28)}
+.booklink .bl-label{white-space:nowrap}
+@media (max-width:560px){.booklink .bl-label{display:none}}
 /* drawer + scrim */
 .scrim{position:fixed;inset:0;background:rgba(16,15,12,.42);opacity:0;visibility:hidden;transition:opacity .22s;z-index:40}
 .scrim.open{opacity:1;visibility:visible}
@@ -80,6 +85,10 @@ footer{border-top:1px solid var(--hair);padding:22px 0 44px;color:var(--muted);f
       <span class="bars"><i></i><i></i><i></i></span>Browse
     </button>
     <span class="crumb" id="crumb">All</span>
+    <a class="booklink" href="https://www.blurb.com/bookstore/invited/6664485/acc6592c033ae7ab41ee85cde7096c430b5eced6" target="_blank" rel="noopener" title="A Different Perspective — view Jim Killeen's photo book on Blurb">
+      <img src="assets/book-cover.png" alt="A Different Perspective — photo book by Jim Killeen">
+      <span class="bl-label">The Book</span>
+    </a>
     <span class="navcount" id="navcount"></span>
   </div>
   <main class="grid" id="grid" aria-label="Photo gallery"></main>
